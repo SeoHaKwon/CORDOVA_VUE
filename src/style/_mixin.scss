@@ -1,0 +1,36 @@
+//mixin
+@mixin bgImg ($url, $pos:center, $repet:no-repeat, $type:png) {
+    background-image: url(../../assets/images/#{$url}.#{$type});
+    background-repeat: $repet;
+    background-position: $pos;
+}
+
+@mixin virtual() {
+    display: block;
+    position: absolute;
+    top: 0;
+    content: "";
+}
+
+@mixin contentWidth($width:1580px) {
+    max-width: $width;
+    margin: 0 auto;
+}
+
+@mixin shadow(){
+    box-shadow: 3px 3px 14px 10px #e2e2e6
+}
+@mixin textHidden($line :2) {
+    display:block; 
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: normal; 
+    text-align: left; 
+    word-wrap: break-word; display: -webkit-box; 
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+
+}
+
