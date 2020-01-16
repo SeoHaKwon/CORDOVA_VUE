@@ -33,7 +33,7 @@ export default {
   beforeCreate () {
     const _self = this
     if (!localStorage.getItem('DI')) {
-      _self.$store.commit('setIsAppJoin', false)
+      // _self.$store.commit('setIsAppJoin', false)
     }
     document.addEventListener('deviceready', onDeviceReady, false)
     function onDeviceReady () {

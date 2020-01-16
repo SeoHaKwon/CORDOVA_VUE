@@ -32,8 +32,8 @@ export default {
         _self.$store.dispatch('GET_USER_HP', localStorage.getItem('DI'))
           .then(res => {
             if (!res) {
-              _self.$store.commit('setIsAppJoin', false)
-              _self.$router.push('/firstStep')
+              // _self.$store.commit('setIsAppJoin', false)
+              // _self.$router.push('/firstStep')
             } else {
               _self.$store.commit('setUserDI', res.USER_DI)
               _self.$store.commit('SET_USERHP', res.USER_PHONE)
