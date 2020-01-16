@@ -73,15 +73,85 @@ export default {
   },
   watch: {
     scrollResult () {
-      const _self = this
-      if (_self.scrollResult > _self.originScroll) {
-        _self.is_header = false
-      } else {
-        _self.is_header = true
-      }
-      _self.originScroll = _self.scrollResult
+      this.getScroll()
     },
     isMenuShow () {
+      this.isShow()
+    },
+    getSubLogo () {
+      this.logo = 'https://file.irgo.co.kr/data/IRPAGE/IMG/' + this.getSubLogo
+    },
+    getIsIPO () {
+      this.getIPO()
+    },
+    getmReportlen () {
+      this.getreportlen()
+    },
+    getQALEN () {
+      this.getQA()
+    },
+    GETISVIEW () {
+      this.isView()
+    },
+    '$route.params' () {
+      this.is_header = true
+    }
+  },
+  mounted () {
+    if (this.scrollResult) {
+      this.getScroll()
+    }
+    if (this.isMenuShow) {
+      this.isShow()
+    }
+    if (this.getSubLogo) {
+      this.logo = 'https://file.irgo.co.kr/data/IRPAGE/IMG/' + this.getSubLogo
+    }
+    if (this.getIsIPO) {
+      this.getIPO()
+    }
+    if (this.getmReportlen) {
+      this.getreportlen()
+    }
+    if (this.getQALEN) {
+      this.getQA()
+    }
+    if (this.GETISVIEW) {
+      this.isView()
+    }
+  },
+  methods: {
+    isView () {
+      const _self = this
+      for (let i = 0; i < _self.h_list.length; i++) {
+        if (_self.GETISVIEW[_self.h_list[i].c_name] === 'N') {
+          _self.h_list[i].isView = false
+        }
+      }
+      _self.v_list = _.filter(_self.h_list, ['isView', true])
+    },
+    getQA () {
+      const _self = this
+      if (_self.getQALEN > 0) {
+        _self.h_list[1].isView = true
+      }
+      _self.v_list = _.filter(_self.h_list, ['isView', true])
+    },
+    getreportlen () {
+      const _self = this
+      if (_self.getmReportlen > 0) {
+        _self.h_list[3].isView = true
+      }
+      _self.v_list = _.filter(_self.h_list, ['isView', true])
+    },
+    getIPO () {
+      const _self = this
+      if (_self.getIsIPO === 'CT02') {
+        _self.h_list[0].title = 'IPO정보'
+        _self.h_list[0].c_name = 'IPO'
+      }
+    },
+    isShow () {
       const _self = this
       const bodyTag = document.getElementsByTagName('body')[0]
       if (_self.isMenuShow) {
@@ -90,42 +160,18 @@ export default {
         bodyTag.style.overflow = 'inherit'
       }
     },
-    getSubLogo () {
+    getScroll () {
       const _self = this
-      _self.logo = 'https://file.irgo.co.kr/data/IRPAGE/IMG/' + _self.getSubLogo
-    },
-    getIsIPO () {
-      const _self = this
-      if (_self.getIsIPO === 'CT02') {
-        _self.h_list[0].title = 'IPO정보'
-        _self.h_list[0].c_name = 'IPO'
-      }
-    },
-    getmReportlen () {
-      const _self = this
-      if (_self.getmReportlen > 0) {
-        _self.h_list[3].isView = true
-      }
-      _self.v_list = _.filter(_self.h_list, ['isView', true])
-    },
-    getQALEN () {
-      const _self = this
-      if (_self.getQALEN > 0) {
-        _self.h_list[1].isView = true
-      }
-      _self.v_list = _.filter(_self.h_list, ['isView', true])
-    },
-    GETISVIEW () {
-      const _self = this
-      for (let i = 0; i < _self.h_list.length; i++) {
-        if (_self.GETISVIEW[_self.h_list[i].c_name] === 'N') {
-          _self.h_list[i].isView = false
+      if (_self.scrollResult > _self.originScroll) {
+        _self.is_header = false
+        if (_self.scrollResult === 100 && _self.originScroll === 0) {
+          _self.is_header = true
         }
+      } else {
+        _self.is_header = true
       }
-      _self.v_list = _.filter(_self.h_list, ['isView', true])
-    }
-  },
-  methods: {
+      _self.originScroll = _self.scrollResult
+    },
     headerMenuBtn () {
       const _self = this
       _self.setPopup()
@@ -160,18 +206,14 @@ export default {
         document.querySelector('.menu-trigger').classList.remove('type7')
       }
     }
-  },
-  created () {
-  },
-  mounted () {
-    window.addEventListener('scroll', () => {
-    // console.log('asd')
-    })
   }
 }
 </script>
 <style lang="scss">
 @import "@/style/_variables.scss";
+a {
+  text-decoration: none;
+}
 /* slide down 관련 css 추가 */
 .slide-enter-active {
   -moz-transition-duration: 0.3s;

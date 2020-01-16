@@ -21,7 +21,10 @@ export default {
   components: {
   },
   mounted () {
-    // console.log(this.$root.$children[0].globalData.seq)
+    const _self = this
+    if (_self.getCompSeq) {
+      _self.getData()
+    }
   },
   data: () => {
     return {
@@ -37,6 +40,12 @@ export default {
   },
   watch: {
     getCompSeq () {
+      const _self = this
+      _self.getData()
+    }
+  },
+  methods: {
+    getData () {
       const _self = this
       const param = {
         seq: _self.getCompSeq

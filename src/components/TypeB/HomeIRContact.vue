@@ -71,13 +71,8 @@ export default {
   methods: {
     goURL (url) {
       window.open(url, '_BLANK')
-    }
-  },
-  computed: {
-    ...mapGetters(['getCompSeq'])
-  },
-  watch: {
-    getCompSeq () {
+    },
+    getData () {
       const _self = this
       const param = {
         seq: _self.getCompSeq
@@ -95,6 +90,19 @@ export default {
           _self.youtube_url = res[0].IRPAGE_SNS_YOUTUBE
           _self.navertv_url = res[0].IRPAGE_SNS_NAVERTV
         })
+    }
+  },
+  mounted () {
+    if (this.getCompSeq) {
+      this.getData()
+    }
+  },
+  computed: {
+    ...mapGetters(['getCompSeq'])
+  },
+  watch: {
+    getCompSeq () {
+      this.getData()
     }
   }
 }

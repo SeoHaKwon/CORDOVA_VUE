@@ -49,17 +49,8 @@ export default {
           data.is_show = true
         }
       })
-    }
-  },
-  computed: {
-    ...mapGetters(['getCompSeq', 'getQaType'])
-  },
-  watch: {
-    getQaType () {
-      const _self = this
-      _self.qtype = _self.getQaType
     },
-    getCompSeq () {
+    getData () {
       const _self = this
       const aram = {
         seq: _self.getCompSeq
@@ -86,6 +77,25 @@ export default {
             _self.totalArray.push(array)
           }
         })
+    }
+  },
+  computed: {
+    ...mapGetters(['getCompSeq', 'getQaType'])
+  },
+  watch: {
+    getQaType () {
+      this.qtype = this.getQaType
+    },
+    getCompSeq () {
+      this.getData()
+    }
+  },
+  mounted () {
+    if (this.getCompSeq) {
+      this.getData()
+    }
+    if (this.getQaType) {
+      this.qtype = this.getQaType
     }
   }
 }

@@ -38,6 +38,25 @@ export default {
   },
   watch: {
     getCompSeq () {
+      this.getReport()
+    },
+    getMainColor () {
+      this.setMainColor()
+    }
+  },
+  mounted () {
+    if (this.getCompSeq) {
+      this.getReport()
+    }
+    if (this.getMainColor) {
+      this.setMainColor()
+    }
+  },
+  methods: {
+    openData (FILENAME) {
+      window.open('https://file.irgo.co.kr/data/IRPAGE/BIZ_REPORT/' + FILENAME, '_BLANK')
+    },
+    getReport () {
       const _self = this
       const aram = {
         seq: _self.getCompSeq
@@ -47,14 +66,8 @@ export default {
           _self.report = res
         })
     },
-    getMainColor () {
-      const _self = this
-      _self.mcolor = '#' + _self.getMainColor
-    }
-  },
-  methods: {
-    openData (FILENAME) {
-      window.open('https://file.irgo.co.kr/data/IRPAGE/BIZ_REPORT/' + FILENAME, '_BLANK')
+    setMainColor () {
+      this.mcolor = '#' + this.getMainColor
     }
   }
 }

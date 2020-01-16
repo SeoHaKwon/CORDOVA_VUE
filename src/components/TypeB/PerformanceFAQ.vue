@@ -26,6 +26,9 @@
         <img width="12px" src="@/assets/Type_B/img/more_arrow.png" />
       </button>
     </div>
+    <div class="question_div" v-if="getUserDI || isMobile">
+      <button class="question" v-on:click="goAsk" style="border: 0;cursor: pointer;" :style="{'background-color': mcolor}">문의하기</button>
+    </div>
     <modal-desktop v-if="isIRModal">
       <div slot="body">
         <div class="modal-desktop-close" @click="clickModal(false)">
@@ -44,10 +47,8 @@
             </div>
             <span class="faq-question-title">{{faqContents[viewIdx].Q_USER}} 주주님의 질문입니다.</span>
         </h5>
-        <h5 class="FAQ-modal-title">
-          {{faqContents[viewIdx].QUESTION}}
-        </h5>
-        <div class="social-info">
+        <h5 class="FAQ-modal-title" v-html="faqContents[viewIdx].QUESTION" />
+        <div class="social-info" v-if="false">
           <h5 class="date">
           </h5>
           <div class="social-sns" v-if="false">
@@ -115,12 +116,9 @@ export default {
       allData: [],
       ori_active: 0,
       qtype: '',
-      mcolor: ''
+      mcolor: '',
+      isMobile: false
     }
-  },
-  components: {
-  },
-  mounted () {
   },
   filters: {
     v_date: function (date) {
@@ -137,6 +135,7 @@ export default {
       const _self = this
       if (isOpen) {
         _self.viewIdx = idx
+        this.faqContents[this.viewIdx].QUESTION = this.faqContents[this.viewIdx].QUESTION.replace('\r\n', '<br>')
         globalBody.style.overflow = 'hidden'
       } else {
         globalBody.style.overflow = 'inherit'
@@ -147,6 +146,9 @@ export default {
       const _self = this
       _self.setActive(idx)
       _self.$emit('changeQuarterfaq', quat)
+      if (localStorage.getItem('DI')) {
+        _self.isMobile = true
+      }
     },
     setActive (idx) {
       const _self = this
@@ -157,21 +159,11 @@ export default {
     moreFaqTypeA () {
       const _self = this
       _self.faqContents = _self.faqContents.concat(_self.allData.splice(0, 5))
-    }
-  },
-  computed: {
-    ...mapGetters(['getCompSeq', 'getCompCode', 'getQaType', 'getMainColor'])
-  },
-  watch: {
-    getMainColor () {
-      const _self = this
-      _self.mcolor = '#' + _self.getMainColor
     },
-    getQaType () {
-      const _self = this
-      _self.qtype = _self.getQaType
+    goAsk () {
+      this.$router.push('/ask')
     },
-    getCompSeq () {
+    getData () {
       const _self = this
       const param = {
         code: _self.getCompCode,
@@ -196,6 +188,31 @@ export default {
           _self.faqContents = res.splice(0, 5)
         })
     }
+  },
+  computed: {
+    ...mapGetters(['getCompSeq', 'getCompCode', 'getQaType', 'getMainColor', 'getUserDI'])
+  },
+  watch: {
+    getMainColor () {
+      this.mcolor = '#' + this.getMainColor
+    },
+    getQaType () {
+      this.qtype = this.getQaType
+    },
+    getCompSeq () {
+      this.getData()
+    }
+  },
+  mounted () {
+    if (this.getCompSeq) {
+      this.getData()
+    }
+    if (this.getQaType) {
+      this.qtype = this.getQaType
+    }
+    if (this.getMainColor) {
+      this.mcolor = '#' + this.getMainColor
+    }
   }
 }
 </script>
@@ -203,6 +220,17 @@ export default {
 @import "@/style/_variables.scss";
 #FAQ > ul > li {
   cursor: pointer;
+}
+.question_div {
+  display: flex;
+  justify-content: center;
+}
+.question {
+    padding: 8px 30px;
+    margin-top: 50px;
+    background-color: #E91E63;
+    color: white;
+    border-radius: 17px;
 }
 .PerformanceFAQ {
   padding-top: 200px;

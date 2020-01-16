@@ -5,7 +5,7 @@ const config = {
 }
 
 async function getAPIData (payload) {
-  return axios.post(`${window.location.protocol}//${config.baseUrl}${payload.url}`, payload.data)
+  return axios.post(`https://${config.baseUrl}${payload.url}`, payload.data)
 }
 
 export { getAPIData }

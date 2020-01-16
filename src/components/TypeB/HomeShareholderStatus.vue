@@ -56,7 +56,7 @@
               </div>
           </div>
         <div class="shareholder-group-caption" v-if="shareHolderComment">
-            <h5 class="title">{{ shareHolderComment }}</h5>
+            <h5 class="title" v-html="shareHolderComment"/>
         </div>
       </div>
       <div class="shareholder-data" v-if="isDividend == 'Y' && TOTAL_STOCK_DATA.length > 0">
@@ -119,7 +119,7 @@
               </div>
           </div>
         <div class="shareholder-group-caption" v-if="TOTAL_STOCK_DATA.length > 0">
-            <h5 class="title">{{ TOTAL_STOCK_DATA[0].F_DIV_COMMENT }}</h5>
+            <h5 class="title" v-html="memberCaptionTitle" />
             <!-- <h5 class="description">{{ caption.dscription }}</h5> -->
         </div>
   </div>
@@ -243,12 +243,13 @@ export default {
           ]
         }
       ],
-      memberCaption: [
-        {
-          title: '주1)',
-          dscription: ''
-        }
-      ],
+      // memberCaption: [
+      //   {
+      //     title: '주1)',
+      //     dscription: ''
+      //   }
+      // ],
+      memberCaptionTitle: '',
       shareHolderComment: ''
     }
   },
@@ -274,8 +275,6 @@ export default {
         return '-'
       }
     }
-  },
-  mounted () {
   },
   methods: {
     setActive (idx) {
@@ -319,16 +318,11 @@ export default {
       _self.datas[4]['value'][0] = Number(req.F_DIV_TOT_COMMON)
       _self.datas[4]['value'][1] = Number(req.F_DIV_TOT_PERFERRED)
       _self.STOCK_TOTAL = Number(req.F_DIV_TOTAL)
-      _self.memberCaption[0].title = req.F_DIV_COMMENT
-    }
-  },
-  watch: {
-    GETISVIEW () {
-      const _self = this
-      _self.isShareHolder = _self.GETISVIEW.ShareHolder
-      _self.isDividend = _self.GETISVIEW.dividend
+      if (req.F_DIV_COMMENT) {
+        _self.memberCaptionTitle = req.F_DIV_COMMENT.replace('\r\n', '<br>')
+      }
     },
-    getCompSeq () {
+    getShareData () {
       const _self = this
       const param = {
         seq: _self.getCompSeq
@@ -351,7 +345,9 @@ export default {
             _self.memberData[2].percent = (res[0].FOREIGN_STOCKHOLDER / _self.totalJu * 100).toFixed(4)
             _self.memberData[3].percent = (res[0].TREA_STOCKHOLDER / _self.totalJu * 100).toFixed(4)
             _self.memberData[4].percent = (res[0].INDI_STOCKHOLDER / _self.totalJu * 100).toFixed(4)
-	    _self.shareHolderComment = res[0].COMMENT
+            if (res[0].COMMENT) {
+              _self.shareHolderComment = res[0].COMMENT.replace('\r\n', '<br>')
+            }
             for (var key in _self.sections) {
               _self.sections[key].value = Number(_self.memberData[key].percent)
               if (key > 3) {
@@ -374,15 +370,35 @@ export default {
           }
         })
     },
-    getMainColor () {
+    isView () {
       const _self = this
-      _self.mcolor = '#' + _self.getMainColor
-      // _self.sections[0].color = '#' + _self.getMainColor
-      // _self.memberData[0].color = '#' + _self.getMainColor
-      for (var i = 0; i < 3; i++) {
-        // _self.sections[i].color = _self.changeColor(_self.mcolor, i)
-        // _self.memberData[i].color = _self.changeColor(_self.mcolor, i)
-      }
+      _self.isShareHolder = _self.GETISVIEW.ShareHolder
+      _self.isDividend = _self.GETISVIEW.dividend
+    },
+    setMainColor () {
+      this.mcolor = '#' + this.getMainColor
+    }
+  },
+  watch: {
+    GETISVIEW () {
+      this.isView()
+    },
+    getCompSeq () {
+      this.getShareData()
+    },
+    getMainColor () {
+      this.setMainColor()
+    }
+  },
+  mounted () {
+    if (this.getCompSeq) {
+      this.getShareData()
+    }
+    if (this.GETISVIEW) {
+      this.isView()
+    }
+    if (this.getMainColor) {
+      this.setMainColor()
     }
   }
 }

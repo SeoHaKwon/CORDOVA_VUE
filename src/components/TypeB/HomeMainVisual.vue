@@ -57,6 +57,30 @@ export default {
   },
   watch: {
     getCompCode () {
+      this.getKrxData()
+    },
+    getBanner () {
+      this.setBanner()
+    }
+  },
+  mounted () {
+    if (this.getCompCode) {
+      this.getKrxData()
+    }
+    if (this.getBanner) {
+      this.setBanner()
+    }
+  },
+  methods: {
+    setBanner () {
+      const _self = this
+      if (_self.getBanner == null) {
+        _self.isImg = false
+      } else {
+        _self.Banner = 'https://file.irgo.co.kr/data/IRPAGE/IMG/' + _self.getBanner
+      }
+    },
+    getKrxData () {
       const _self = this
       if (_self.getCompCode) {
         const param = {
@@ -70,16 +94,6 @@ export default {
           })
       }
     },
-    getBanner () {
-      const _self = this
-      if (_self.getBanner == null) {
-        _self.isImg = false
-      } else {
-        _self.Banner = 'https://file.irgo.co.kr/data/IRPAGE/IMG/' + _self.getBanner
-      }
-    }
-  },
-  methods: {
     getNowDate () {
       const _self = this
       let month = new Date().getMonth() + 1

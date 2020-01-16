@@ -51,11 +51,6 @@ export default {
       isImg: true
     }
   },
-  mounted: () => {
-    // console.log(document.getElementById('Performance').offsetTop)
-    // const _self = this
-    // _self.h_list[0].offSet = document.getElementById(_self.h_list[0].c_name).offsetTop
-  },
   methods: {
     moveCategory (idx, cname) {
       const _self = this
@@ -74,56 +69,8 @@ export default {
     },
     moveMain () {
       location.href = '/'
-    }
-  },
-  computed: {
-    ...mapGetters(['getMainColor', 'getSubLogo', 'GETISVIEW', 'getIsIPO', 'getmReportlen', 'getQALEN'])
-  },
-  watch: {
-    getIsIPO () {
-      const _self = this
-      if (_self.getIsIPO === 'CT02') {
-        _self.h_list[0].title = 'IPO정보'
-        _self.h_list[0].c_name = 'IPO'
-      }
     },
-    GETISVIEW () {
-      const _self = this
-      for (let i = 0; i < _self.h_list.length; i++) {
-        if (_self.GETISVIEW[_self.h_list[i].c_name] === 'N') {
-          _self.h_list[i].isView = false
-        }
-      }
-      _self.v_list = _.filter(_self.h_list, ['isView', true])
-    },
-    getMainColor () {
-      const _self = this
-      _self.mcolor = '#' + _self.getMainColor
-      // _self.h_list[0].color = _self.mcolor
-    },
-    getSubLogo () {
-      const _self = this
-      if (_self.getSubLogo == null) {
-        _self.isImg = false
-      } else {
-        _self.logo = 'https://file.irgo.co.kr/data/IRPAGE/IMG/' + _self.getSubLogo
-      }
-    },
-    getmReportlen () {
-      const _self = this
-      if (_self.getmReportlen > 0) {
-        _self.h_list[3].isView = true
-      }
-      _self.v_list = _.filter(_self.h_list, ['isView', true])
-    },
-    getQALEN () {
-      const _self = this
-      if (_self.getQALEN > 0) {
-        _self.h_list[1].isView = true
-      }
-      _self.v_list = _.filter(_self.h_list, ['isView', true])
-    },
-    scrollResult () {
+    getScroll () {
       const _self = this
       let targetData = ''
       let idx = 0
@@ -140,6 +87,93 @@ export default {
         }
         _self.moveCategory(idx, targetData)
       }
+    },
+    getQA () {
+      const _self = this
+      if (_self.getQALEN > 0) {
+        _self.h_list[1].isView = true
+      }
+      _self.v_list = _.filter(_self.h_list, ['isView', true])
+    },
+    getIPO () {
+      const _self = this
+      if (_self.getIsIPO === 'CT02') {
+        _self.h_list[0].title = 'IPO정보'
+        _self.h_list[0].c_name = 'IPO'
+      }
+    },
+    isview () {
+      const _self = this
+      for (let i = 0; i < _self.h_list.length; i++) {
+        if (_self.GETISVIEW[_self.h_list[i].c_name] === 'N') {
+          _self.h_list[i].isView = false
+        }
+      }
+      _self.v_list = _.filter(_self.h_list, ['isView', true])
+    },
+    getlogo () {
+      const _self = this
+      if (_self.getSubLogo == null) {
+        _self.isImg = false
+      } else {
+        _self.logo = 'https://file.irgo.co.kr/data/IRPAGE/IMG/' + _self.getSubLogo
+      }
+    },
+    getreportlen () {
+      const _self = this
+      if (_self.getmReportlen > 0) {
+        _self.h_list[3].isView = true
+      }
+      _self.v_list = _.filter(_self.h_list, ['isView', true])
+    }
+  },
+  computed: {
+    ...mapGetters(['getMainColor', 'getSubLogo', 'GETISVIEW', 'getIsIPO', 'getmReportlen', 'getQALEN'])
+  },
+  watch: {
+    getIsIPO () {
+      this.getIPO()
+    },
+    GETISVIEW () {
+      this.isview()
+    },
+    getMainColor () {
+      this.mcolor = '#' + this.getMainColor
+    },
+    getSubLogo () {
+      this.getlogo()
+    },
+    getmReportlen () {
+      this.getreportlen()
+    },
+    getQALEN () {
+      this.getQA()
+    },
+    scrollResult () {
+      this.getScroll()
+    }
+  },
+  mounted () {
+    if (this.getIsIPO) {
+      this.getIPO()
+    }
+    if (this.GETISVIEW) {
+      this.isview()
+    }
+    if (this.getMainColor) {
+      this.mcolor = '#' + this.getMainColor
+    }
+    if (this.getSubLogo) {
+      this.getlogo()
+    }
+    if (this.getmReportlen) {
+      this.getreportlen()
+    }
+    if (this.getQALEN) {
+      this.getQA()
+    }
+    if (this.scrollResult) {
+      this.getScroll()
     }
   }
 }

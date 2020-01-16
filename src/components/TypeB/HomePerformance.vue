@@ -59,7 +59,7 @@ export default {
           } else {
             _self.silJ.length = 0
           }
-          if (_self.silJ) {
+          if (_self.silJ.length > 0) {
             _self.silJ.TYPE = 'PDF'
             _self.silJ.TITLE = '20' + year + '년 ' + quat.split('Q')[0] + '분기 실적발표자료'
           }
@@ -91,14 +91,8 @@ export default {
           }
           _self.type_D = result
         })
-    }
-  },
-  watch: {
-    getIsIPO () {
-      const _self = this
-      _self.ipo = _self.getIsIPO
     },
-    getCompSeq () {
+    getData () {
       const _self = this
       const param = {
         code: _self.getCompCode,
@@ -143,6 +137,27 @@ export default {
         }
         _self.changeQuarterData(data[0].YEAR, data[0].PERIOD + 'Q')
       })
+    },
+    setIsIPO () {
+      this.ipo = this.getIsIPO
+    }
+  },
+  watch: {
+    getIsIPO () {
+      this.setIsIPO()
+    },
+    getCompSeq () {
+      const _self = this
+      _self.getData()
+    }
+  },
+  mounted () {
+    const _self = this
+    if (_self.getCompSeq) {
+      _self.getData()
+    }
+    if (_self.getIsIPO) {
+      _self.setIsIPO()
     }
   }
 }
