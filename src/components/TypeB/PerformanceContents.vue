@@ -1,10 +1,10 @@
 <template>
   <div class="PerformanceContents">
     <ul class="performance-group-tab">
-      <li v-for="(items, idx) in silq" v-bind:key="idx" v-on:click="getContents(items, idx)" :class="isActive[idx]">
+      <li v-for="(items, idx) in silq" v-on:click="getContents(items, idx)" :class="isActive[idx]" v-bind:key="idx">
         <a>{{ items }}</a>
       </li>
-      <li v-for="item in 5 - silq.length" v-bind:key="item"></li>
+      <li v-for="item in 5 - silq.length" :key="`A-${item}`"></li>
     </ul>
       <div class="performance-select">
         <div class="select-warp">
@@ -30,7 +30,7 @@
         </div>
       </div>
       <div class="performance-info">
-        <div class="main-title" v-if="datas.length == 2" v-on:click="getGoURL(silj.UPLOAD_FILE1, silj.SITEURL)">
+        <div class="main-title" v-if="datas.length == 2 && silj.length > 0" v-on:click="getGoURL(silj.UPLOAD_FILE1, silj.SITEURL)">
           <h2 class="title" v-html="silj.TITLE">
           </h2>
           <div class="download">
@@ -56,7 +56,7 @@
       </div>
     </div>
     <ul class="SmallType-Performance" v-else>
-      <li v-on:click="getGoURL(silj.UPLOAD_FILE1, silj.SITEURL)">
+      <li v-on:click="getGoURL(silj.UPLOAD_FILE1, silj.SITEURL)" v-if="silj.length > 0">
         <h5>{{ silj.TITLE }}</h5>
         <h6>
           <a>
@@ -143,16 +143,22 @@ export default {
   },
   watch: {
     getPerFormImg () {
-      const _self = this
-      _self.bimg = 'https://file.irgo.co.kr/data/IRPAGE/IMG/' + _self.getPerFormImg
+      this.bimg = 'https://file.irgo.co.kr/data/IRPAGE/IMG/' + this.getPerFormImg
     },
     silj () {
       // const _self = this
       // _self.thumbnail = 'http://file.irgo.co.kr/data/BOARD/ATTACH_IMG/' + _self.silj.UPLOAD_THUMBNAIL
     },
     getMainColor () {
-      const _self = this
-      _self.mcolor = '#' + _self.getMainColor
+      this.mcolor = '#' + this.getMainColor
+    }
+  },
+  mounted () {
+    if (this.getPerFormImg) {
+      this.bimg = 'https://file.irgo.co.kr/data/IRPAGE/IMG/' + this.getPerFormImg
+    }
+    if (this.getMainColor) {
+      this.mcolor = '#' + this.getMainColor
     }
   }
 }

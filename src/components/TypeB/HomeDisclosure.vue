@@ -39,7 +39,15 @@ export default {
       is_view: 'N'
     }
   },
-  mounted () {},
+  mounted () {
+    const _self = this
+    if (_self.GETISVIEW) {
+      _self.setIsView()
+    }
+    if (_self.getCompCode) {
+      this.getData()
+    }
+  },
   computed: {
     ...mapGetters(['getCompSeq', 'getCompCode', 'GETISVIEW'])
   },
@@ -59,14 +67,12 @@ export default {
     moreData () {
       const _self = this
       _self.disclo = _self.disclo.concat(_self.allData.splice(0, 5))
-    }
-  },
-  watch: {
-    GETISVIEW () {
+    },
+    setIsView () {
       const _self = this
       _self.is_view = _self.GETISVIEW.Disclosure
     },
-    getCompCode () {
+    getData () {
       const _self = this
       const aram = {
         comp_name: _self.getCompName,
@@ -81,6 +87,16 @@ export default {
             _self.allData = res
           }
         })
+    }
+  },
+  watch: {
+    GETISVIEW () {
+      const _self = this
+      _self.setIsView()
+    },
+    getCompCode () {
+      const _self = this
+      _self.getData()
     }
   }
 }

@@ -126,14 +126,8 @@ export default {
         globalBody.style.overflow = 'inherit'
       }
       this.isIRModal = isOpen
-    }
-  },
-  watch: {
-    getMainColor () {
-      const _self = this
-      _self.mcolor = '#' + _self.getMainColor
     },
-    getCompSeq () {
+    getData () {
       const _self = this
       const param = {
         seq: _self.getCompSeq,
@@ -156,6 +150,25 @@ export default {
             }
           }
         })
+    },
+    setMainColor () {
+      this.mcolor = '#' + this.getMainColor
+    }
+  },
+  watch: {
+    getMainColor () {
+      this.setMainColor()
+    },
+    getCompSeq () {
+      this.getData()
+    }
+  },
+  mounted () {
+    if (this.getCompSeq) {
+      this.getData()
+    }
+    if (this.getMainColor) {
+      this.setMainColor()
     }
   }
 }

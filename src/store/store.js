@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getAPIData } from '../api'
+import { getAPIData, JoinModule } from '../api'
 
 Vue.use(Vuex)
 
@@ -32,9 +32,21 @@ export default new Vuex.Store({
     QALEN: 0,
     FINLEN: 0,
     IRPAGE_TYPE: '',
-    SubImg: ''
+    SubImg: '',
+    isAppJoin: true,
+    userDI: '',
+    userhp: 0
   },
   getters: {
+    getUserHP (state) {
+      return state.userhp
+    },
+    getUserDI (state) {
+      return state.userDI
+    },
+    getIsAppJoin (state) {
+      return state.isAppJoin
+    },
     getCompCode (state) {
       return state.code
     },
@@ -88,6 +100,12 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    setUserDI (state, data) {
+      state.userDI = data
+    },
+    setIsAppJoin (state, data) {
+      state.isAppJoin = data
+    },
     setIsAgreeCertification (state, data) {
       state.isAgreeCertification = data
     },
@@ -141,6 +159,9 @@ export default new Vuex.Store({
     },
     SET_FINLEN (state, payload) {
       state.FINLEN = payload
+    },
+    SET_USERHP (state, payload) {
+      state.userhp = payload
     }
   },
   actions: {
@@ -352,6 +373,42 @@ export default new Vuex.Store({
         url: 'IsMenuTitle'
       }
       const res = await getAPIData(param)
+      return res.data[0]
+    },
+    async SET_APP_DATA (context, payload) {
+      let param = {
+        data: payload,
+        url: 'updateAppData'
+      }
+      const res = await getAPIData(param)
+      return res.data[0]
+    },
+    async SET_QA (context, payload) {
+      let param = {
+        data: payload,
+        url: 'insertQA'
+      }
+      const res = await getAPIData(param)
+      return res.data[0]
+    },
+    async GET_USER_HP (context, payload) {
+      let datas = {
+        'di': payload,
+        'seq': context.getters.getCompSeq
+      }
+      let param = {
+        data: datas,
+        url: 'getUserHP'
+      }
+      const res = await getAPIData(param)
+      if (res.length > 0) {
+        this.commit('SET_USERHP', res.data[0].USER_PHONE)
+        this.commit('setUserDI', res.data[0].USER_DI)
+      }
+      return res.data[0]
+    },
+    async GO_JOIN (context, payload) {
+      const res = await JoinModule(payload)
       return res.data[0]
     }
   }

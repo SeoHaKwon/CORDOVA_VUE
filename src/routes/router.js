@@ -1,21 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/MainHome'
-import Announcement from '@/views/TypeA/Announcement'
-import AnnouncementView from '@/views/TypeA/AnnouncementView'
-import Schedule from '@/views/TypeA/Schedule'
-import ScheduleView from '@/views/TypeA/ScheduleView'
-import News from '@/views/TypeA/News'
-import NewsView from '@/views/TypeA/NewsView'
-import Finance from '@/views/TypeA/Finance'
-import Status from '@/views/TypeA/Status'
-import Disclosure from '@/views/TypeA/Disclosure'
-import Report from '@/views/TypeA/Report'
-import Contact from '@/views/TypeA/Contact'
+import FirstStep from '@/views/AppJoin/FirstStep'
+import AgreeStep from '@/views/AppJoin/AgreeStep'
+import Ask from '@/views/AppJoin/Ask2'
+import Ask2 from '@/views/AppJoin/Ask'
+import AdditionalInfor from '@/views/AppJoin/AdditionalInfor'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
@@ -24,62 +18,30 @@ export default new Router({
       component: Home
     },
     {
-      path: '/schedule',
-      name: 'schedule',
-      component: Schedule
+      path: '/firstStep',
+      name: 'firstStep',
+      component: FirstStep
     },
     {
-      path: '/announcement',
-      name: 'announcement',
-      component: Announcement
-    },
-    {
-      path: '/news',
-      name: 'news',
-      component: News
-    },
-    {
-      path: '/newsView/:index',
-      name: 'newsView',
-      component: NewsView,
+      path: '/agreeStep/:dupidx',
+      name: 'agreeStep',
+      component: AgreeStep,
       props: true
     },
     {
-      path: '/financial',
-      name: 'financial',
-      component: Finance
+      path: '/ask',
+      name: 'ask',
+      component: Ask
     },
     {
-      path: '/status',
-      name: 'status',
-      component: Status
+      path: '/ask2',
+      name: 'ask2',
+      component: Ask2
     },
     {
-      path: '/disclosure',
-      name: 'disclosure',
-      component: Disclosure
-    },
-    {
-      path: '/report',
-      name: 'report',
-      component: Report
-    },
-    {
-      path: '/contact',
-      name: 'contact',
-      component: Contact
-    },
-    {
-      path: '/scheduleView/:index',
-      name: 'scheduleView',
-      component: ScheduleView,
-      props: true
-    },
-    {
-      path: '/announcementView/:index',
-      name: 'announcementView',
-      component: AnnouncementView,
-      props: true
+      path: '/additionalInfor',
+      name: 'additionalInfor',
+      component: AdditionalInfor
     }
   ],
   scrollBehavior (to, from, savedPosition) {

@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div class="desktop-header" v-if="$route.fullPath !== '/join'">
+    <div class="desktop-header">
       <NavigationBar :scrollResult="scrollTemp"/>
     </div>
-    <div class="mobile-header" v-if="$route.fullPath !== '/join'">
+    <div class="mobile-header" v-if="$route.fullPath !== '/ask'">
       <MobileNavigaterBar :scrollResult="scrollTemp"/>
     </div>
     <div
-      :class="{'global-body': widths >= 900 && $route.fullPath !== '/join', 'mobile-global-body': widths < 900 && $route.fullPath !== '/join'}"
+      :class="{'global-body': widths >= 900 && $route.fullPath !== '/ask', 'mobile-global-body': widths < 900 && $route.fullPath !== '/ask'}"
       style="overflow: hidden"
     >
       <router-view/>
     </div>
-    <template v-if="$route.fullPath !== '/join'">
+    <template v-if="$route.fullPath !== '/ask'">
       <footerBody />
     </template>
     <div v-if="isAppDownloadModal" class="app-download-modal">
@@ -79,6 +79,7 @@ export default {
       const _self = this
       bus.$emit('start:spinner')
       _self.cname = _self.getCompName
+      _self.setTITLE()
     },
     loadingStatus () {
       const _self = this
@@ -101,6 +102,11 @@ export default {
     },
     endSpinner () {
       this.loadingStatus = false
+    },
+    setTITLE () {
+      const _self = this
+      let title = document.getElementsByTagName('title')[0]
+      title.innerHTML = _self.getCompName
     }
   },
   mounted () {
@@ -108,6 +114,9 @@ export default {
       this.isMobile = true
     }
     this.fullPath = this.$route.fullPath
+    if (this.getCompName) {
+      this.setTITLE()
+    }
   }
 }
 </script>

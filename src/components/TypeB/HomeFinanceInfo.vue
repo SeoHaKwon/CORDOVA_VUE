@@ -84,6 +84,16 @@ export default {
     ...mapGetters(['getCompSeq', 'getMainColor', 'GETISVIEW'])
   },
   mounted () {
+    const _self = this
+    if (_self.getCompSeq) {
+      _self.getFinance()
+    }
+    if (_self.GETISVIEW) {
+      _self.setIsView()
+    }
+    if (_self.getMainColor) {
+      _self.setMainColor()
+    }
   },
   methods: {
     getData (FILE) {
@@ -105,14 +115,8 @@ export default {
       _self.isActive[_self.ori_active] = ''
       _self.isActive[idx] = 'active'
       _self.ori_active = idx
-    }
-  },
-  watch: {
-    GETISVIEW () {
-      const _self = this
-      _self.is_view = _self.GETISVIEW.Finance
     },
-    getCompSeq () {
+    getFinance () {
       const _self = this
       const aram = {
         seq: _self.getCompSeq
@@ -135,9 +139,25 @@ export default {
           }
         })
     },
+    setIsView () {
+      this.is_view = this.GETISVIEW.Finance
+    },
+    setMainColor () {
+      this.mcolor = '#' + this.getMainColor
+    }
+  },
+  watch: {
+    GETISVIEW () {
+      const _self = this
+      _self.setIsView()
+    },
+    getCompSeq () {
+      const _self = this
+      _self.getFinance()
+    },
     getMainColor () {
       const _self = this
-      _self.mcolor = '#' + _self.getMainColor
+      _self.setMainColor()
     }
   }
 }

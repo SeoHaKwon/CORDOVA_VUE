@@ -78,6 +78,9 @@ export default {
     HomeAppBanner,
     PerformanceFAQ,
     PerformanceFAQTypeB
+  },
+  mounted () {
+    console.log(this.$push)
   }
 }
 </script>

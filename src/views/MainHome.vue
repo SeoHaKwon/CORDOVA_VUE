@@ -5,53 +5,41 @@
 </template>
 
 <script>
-import AHOME from '@/views/TypeA/Home'
 import BHOME from '@/views/TypeB/Home'
-import { mapGetters } from 'vuex'
 
 export default {
   components: {
-    AHOME,
     BHOME
   },
   data: () => {
     return {
-      selectedComponents: ''
+      selectedComponents: 'BHOME'
     }
-  },
-  computed: {
-    ...mapGetters(['getCompName'])
   },
   mounted () {
     const _self = this
     const param = {
-      'url': window.location.hostname
+      // 'url': window.location.hostname
+      'url': 'shinsungeng.irpage.co.kr'
     }
-    this.$store.dispatch('GET_PAGETYPE', param)
-      .then(res => {
-        if (res.IRPAGE_TYPE === 'A') {
-          _self.selectedComponents = 'AHOME'
-        } else if (res.IRPAGE_TYPE === 'B') {
-          _self.selectedComponents = 'BHOME'
-        }
-        _self.$store.dispatch('SET_INFO', param)
+    if (localStorage.getItem('DI')) {
+      _self.$store.commit('setIsAppJoin', true)
+    }
+    _self.$store.dispatch('SET_INFO', param)
+      .then(resp => {
+        localStorage.setItem('SEQ', resp.COMP_SEQ)
+        localStorage.setItem('CNAME', resp.COMP_NAME)
+        _self.$store.dispatch('GET_USER_HP', localStorage.getItem('DI'))
+          .then(res => {
+            if (!res) {
+              _self.$store.commit('setIsAppJoin', false)
+              _self.$router.push('/firstStep')
+            } else {
+              _self.$store.commit('setUserDI', res.USER_DI)
+              _self.$store.commit('SET_USERHP', res.USER_PHONE)
+            }
+          })
       })
-    if (_self.getCompName) {
-      _self.setTITLE()
-    }
-  },
-  watch: {
-    getCompName () {
-      const _self = this
-      _self.setTITLE()
-    }
-  },
-  methods: {
-    setTITLE () {
-      const _self = this
-      let title = document.getElementsByTagName('title')[0]
-      title.innerHTML = _self.getCompName
-    }
   }
 }
 </script>

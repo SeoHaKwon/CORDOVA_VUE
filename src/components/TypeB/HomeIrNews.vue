@@ -167,13 +167,8 @@ export default {
     moreData () {
       const _self = this
       _self.NewsList = _self.NewsList.concat(_self.allData.splice(0, 5))
-    }
-  },
-  computed: {
-    ...mapGetters(['getCompSeq', 'getMainColor'])
-  },
-  watch: {
-    getCompSeq () {
+    },
+    getList () {
       const _self = this
       const aram = {
         seq: _self.getCompSeq
@@ -197,9 +192,27 @@ export default {
           _self.allData = res
         })
     },
+    setMainColor () {
+      this.mcolor = '#' + this.getMainColor
+    }
+  },
+  computed: {
+    ...mapGetters(['getCompSeq', 'getMainColor'])
+  },
+  watch: {
+    getCompSeq () {
+      this.getList()
+    },
     getMainColor () {
-      const _self = this
-      _self.mcolor = '#' + _self.getMainColor
+      this.setMainColor()
+    }
+  },
+  mounted () {
+    if (this.getCompSeq) {
+      this.getList()
+    }
+    if (this.getMainColor) {
+      this.setMainColor()
     }
   }
 }

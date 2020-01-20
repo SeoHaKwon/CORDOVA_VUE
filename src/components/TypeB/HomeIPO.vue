@@ -111,23 +111,8 @@ export default {
       } else if (type === 'PDF') {
         window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + file, '_BLANK')
       }
-    }
-  },
-  computed: {
-    ...mapGetters(['getCompSeq', 'getMainColor', 'getIsIPO'])
-  },
-  mounted () {
-  },
-  watch: {
-    getIsIPO () {
-      const _self = this
-      _self.isIPO = _self.getIsIPO
     },
-    getMainColor () {
-      const _self = this
-      _self.mcolor = '#' + _self.getMainColor
-    },
-    getCompSeq () {
+    getIPOData () {
       const _self = this
       const aram = {
         seq: _self.getCompSeq
@@ -208,6 +193,37 @@ export default {
             _self.IPOList = result
           }
         })
+    },
+    setMainColor () {
+      this.mcolor = '#' + this.getMainColor
+    },
+    setIsIPO () {
+      this.isIPO = this.getIsIPO
+    }
+  },
+  computed: {
+    ...mapGetters(['getCompSeq', 'getMainColor', 'getIsIPO'])
+  },
+  mounted () {
+    if (this.getCompSeq) {
+      this.getIPOData()
+    }
+    if (this.getMainColor) {
+      this.setMainColor()
+    }
+    if (this.getIsIPO) {
+      this.setIsIPO()
+    }
+  },
+  watch: {
+    getIsIPO () {
+      this.setIsIPO()
+    },
+    getMainColor () {
+      this.setMainColor()
+    },
+    getCompSeq () {
+      this.getIPOData()
     }
   }
 }
