@@ -17,7 +17,6 @@
       <input type="hidden" name="EncodeData" v-model="encodeData">
       <input type="hidden" name="param_r1" v-model="remoteaddr">
       <input type="hidden" name="param_r2" v-model="seq">
-      <input type="hidden" name="param_r3" v-model="opener">
     </form>
   </div>
 </template>
@@ -35,7 +34,7 @@ export default {
       CNAME: '',
       logo: '',
       mcolor: '',
-      opener: ''
+      m: 'checkplusSerivce'
     }
   },
   computed: {
@@ -62,6 +61,9 @@ export default {
     }
   },
   methods: {
+    setMobile () {
+
+    },
     compName () {
       if (this.getCompName) {
         this.CNAME = this.getCompName
@@ -79,18 +81,23 @@ export default {
         .then(res => {
           return new Promise((resolve, reject) => {
             _self.encodeData = res.data
-            if (localStorage.getItem('platform') === 'android' || localStorage.getItem('platform') === 'ios') {
-              _self.remoteaddr = window.location.protocol + '//' + window.location.pathname
-            } else {
-              _self.remoteaddr = window.location.origin
-            }
-            window.open('', 'popupChk', 'width=500, height=550, top=100, left=100, fullscreen=no, menubar=no, status=no, toolbar=no, titlebar=yes, location=no, scrollbar=no')
-            document.form_chk.action = 'https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb'
-            document.form_chk.target = 'popupChk'
+            var ref = cordova.InAppBrowser.open('https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb?m=' + _self.m + '&EncodeData=' + _self.encodeData + '&seq=' + _self.seq + '&remoteaddr=' + _self.remoteaddr, '_SELF', 'width=500, height=550, top=100, left=100, fullscreen=no, menubar=no, status=no, toolbar=no, titlebar=yes, location=no, scrollbar=no')
             // document.form_chk.submit()
+            ref.addEventListener('exit', function (event) {
+              // alert('Exit!!!')
+            })
+            ref.addEventListener('loadstop', function (event) {
+              if (event.url.indexOf('setMember') !== -1) {
+                console.dir(event, ' : setMember Event')
+                ref.close()
+                _self.$router.push('/AgreeStep')
+              }
+            })
+            ref.addEventListener('message', function (params) {
+              console.log(params, ' : message')
+              alert(params)
+            })
             resolve()
-          }).then(() => {
-            document.form_chk.submit()
           })
         })
     }
