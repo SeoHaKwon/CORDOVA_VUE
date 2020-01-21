@@ -59,6 +59,7 @@ export default {
   },
   mounted () {
     this.compName()
+    this.$store.commit('setIsAppJoin', true)
   },
   computed: {
     ...mapGetters(['getUserDI', 'getCompSeq', 'getCompName', 'getMainColor'])

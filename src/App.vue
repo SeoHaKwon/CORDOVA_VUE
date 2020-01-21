@@ -33,6 +33,7 @@ export default {
   beforeCreate () {
     const _self = this
     if (!localStorage.getItem('DI')) {
+      console.log(localStorage.getItem('DI'), 'is localStorage DI 없음')
       _self.$store.commit('setIsAppJoin', false)
     }
     document.addEventListener('deviceready', onDeviceReady, false)

@@ -31,10 +31,12 @@ export default {
         localStorage.setItem('CNAME', resp.COMP_NAME)
         _self.$store.dispatch('GET_USER_HP', localStorage.getItem('DI'))
           .then(res => {
-            if (!res) {
+            if (!res || res.length < 50) {
+              console.log(res, ' : !res in MainHome')
               _self.$store.commit('setIsAppJoin', false)
               _self.$router.push('/firstStep')
             } else {
+              console.log(res, ' : res in MainHome')
               _self.$store.commit('setUserDI', res.USER_DI)
               _self.$store.commit('SET_USERHP', res.USER_PHONE)
             }

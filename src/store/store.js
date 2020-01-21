@@ -417,7 +417,7 @@ export default new Vuex.Store({
         url: 'SESSION_TO_DI'
       }
       const res = await getAPIData(param)
-      return res.data[0]
+      return res.data
     }
   }
 })

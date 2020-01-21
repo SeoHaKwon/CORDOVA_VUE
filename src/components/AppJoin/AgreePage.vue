@@ -528,6 +528,7 @@ export default {
         }
         this.$store.dispatch('SESSION_TEMP_TO_DI', data)
           .then(res => {
+            console.log(res, ' : res of AgreePage')
             this.$store.commit('setUserDI', res.USER_DI)
             localStorage.setItem('DI', res.USER_DI)
           })
