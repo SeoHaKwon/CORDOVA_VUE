@@ -410,6 +410,14 @@ export default new Vuex.Store({
     async GO_JOIN (context, payload) {
       const res = await JoinModule(payload)
       return res.data[0]
+    },
+    async SESSION_TEMP_TO_DI (context, payload) {
+      let param = {
+        data: payload,
+        url: 'SESSION_TO_DI'
+      }
+      const res = await getAPIData(param)
+      return res.data[0]
     }
   }
 })

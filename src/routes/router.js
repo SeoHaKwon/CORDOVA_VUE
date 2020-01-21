@@ -23,7 +23,7 @@ export default new Router({
       component: FirstStep
     },
     {
-      path: '/agreeStep/:dupidx',
+      path: '/agreeStep/:index',
       name: 'agreeStep',
       component: AgreeStep,
       props: true

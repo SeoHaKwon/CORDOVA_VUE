@@ -514,19 +514,28 @@ export default {
       }
     },
     '$route.params' () {
-      if (this.$route.params.dupidx) {
-        this.$store.commit('setUserDI', this.$route.params.dupidx)
-        localStorage.setItem('DI', this.$route.params.dupidx)
-      }
+      this.checkData()
     }
   },
   mounted () {
-    if (this.$route.params.dupidx) {
-      this.$store.commit('setUserDI', this.$route.params.dupidx)
-      localStorage.setItem('DI', this.$route.params.dupidx)
-    }
+    this.checkData()
   },
   methods: {
+    checkData () {
+      if (this.$route.params.index) {
+        let data = {
+          di: this.$route.params.index
+        }
+        this.$store.dispatch('SESSION_TEMP_TO_DI', data)
+          .then(res => {
+            this.$store.commit('setUserDI', res.USER_DI)
+            localStorage.setItem('DI', res.USER_DI)
+          })
+      } else {
+        alert('잘못된 접근입니다.')
+        this.$router.push('/')
+      }
+    },
     popClose () {
       const _self = this
       _self.IsPop = false

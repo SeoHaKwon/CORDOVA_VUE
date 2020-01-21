@@ -86,7 +86,8 @@ export default {
             ref.addEventListener('loadstop', function (event) {
               if (event.url.indexOf('setMember') !== -1) {
                 ref.close()
-                _self.$router.push('/AgreeStep')
+                _self.$router.push({ name: 'agreeStep', params: { 'index': _self.remoteaddr } })
+                _self.$router.push('/agreeStep')
               }
             })
             resolve()
