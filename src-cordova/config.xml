@@ -20,11 +20,17 @@
     <allow-intent href="geo:*" />
     <platform name="android">
         <allow-intent href="market:*" />
-        <icon src="logo.png" />
-        <splash src="splash.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
+        <splash src="res/320x480.svg" width="320" height="480"/>
+        <splash src="res/320x480.svg" width="640" height="960"/>
+        <splash src="res/768x1024.svg" width="768" height="1024"/>
+        <splash src="res/768x1024.svg" width="1536" height="2048"/>
+        <splash src="res/640x1136.svg" width="640" height="1136"/>
+        <splash src="res/750x1334.svg" width="750" height="1334"/>
+        <splash src="res/750x1334.svg" width="1242" height="2208"/>
+        <splash src="res/375x812.svg" width="1125" height="2436"/>
     </platform>
 </widget>
