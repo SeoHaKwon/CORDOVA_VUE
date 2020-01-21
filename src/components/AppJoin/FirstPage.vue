@@ -12,12 +12,6 @@
     <a href="javascript:void(0);" class="btn-bottom" v-on:click="letsStart" :style="{'background-color': mcolor}">
       인증하기
     </a>
-    <form name="form_chk" method="get" >
-      <input type="hidden" name="m" value="checkplusSerivce">
-      <input type="hidden" name="EncodeData" v-model="encodeData">
-      <input type="hidden" name="param_r1" v-model="remoteaddr">
-      <input type="hidden" name="param_r2" v-model="seq">
-    </form>
   </div>
 </template>
 <script>
@@ -61,8 +55,11 @@ export default {
     }
   },
   methods: {
-    setMobile () {
-
+    setNumber () {
+      return ((1 + Math.random()) * 0x10000 | 0).toString(16).substring(1)
+    },
+    createSecureData () {
+      this.remoteaddr = this.setNumber() + this.setNumber() + '-' + this.setNumber() + '-' + this.setNumber() + '-' + this.setNumber() + '-' + this.setNumber() + this.setNumber() + this.setNumber()
     },
     compName () {
       if (this.getCompName) {
@@ -80,22 +77,17 @@ export default {
       axios.post('https://api.irpage.co.kr/api/irgo/getMemberInfo')
         .then(res => {
           return new Promise((resolve, reject) => {
+            _self.createSecureData()
             _self.encodeData = res.data
-            var ref = cordova.InAppBrowser.open('https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb?m=' + _self.m + '&EncodeData=' + _self.encodeData + '&seq=' + _self.seq + '&remoteaddr=' + _self.remoteaddr, '_SELF', 'width=500, height=550, top=100, left=100, fullscreen=no, menubar=no, status=no, toolbar=no, titlebar=yes, location=no, scrollbar=no')
-            // document.form_chk.submit()
+            var ref = window.open('https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb?m=' + _self.m + '&EncodeData=' + _self.encodeData + '&param_r2=' + _self.seq + '&param_r1=' + _self.remoteaddr, '_SELF', 'width=500,height=550,top=100,left=100,fullscreen=no,menubar=no,status=no,toolbar=no,titlebar=yes,location=no,scrollbar=no')
             ref.addEventListener('exit', function (event) {
               // alert('Exit!!!')
             })
             ref.addEventListener('loadstop', function (event) {
               if (event.url.indexOf('setMember') !== -1) {
-                console.dir(event, ' : setMember Event')
                 ref.close()
                 _self.$router.push('/AgreeStep')
               }
-            })
-            ref.addEventListener('message', function (params) {
-              console.log(params, ' : message')
-              alert(params)
             })
             resolve()
           })

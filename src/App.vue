@@ -37,6 +37,7 @@ export default {
     }
     document.addEventListener('deviceready', onDeviceReady, false)
     function onDeviceReady () {
+      window.open = cordova.InAppBrowser.open
       if (cordova.platformId === 'android') {
         localStorage.setItem('platform', 'android')
       } else if (cordova.platformId === 'ios') {
