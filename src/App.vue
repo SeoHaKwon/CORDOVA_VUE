@@ -33,11 +33,15 @@ export default {
   beforeCreate () {
     const _self = this
     if (!localStorage.getItem('DI')) {
-      console.log(localStorage.getItem('DI'), 'is localStorage DI 없음')
       _self.$store.commit('setIsAppJoin', false)
     }
-    document.addEventListener('deviceready', onDeviceReady, false)
-    function onDeviceReady () {
+  },
+  mounted () {
+    const _self = this
+    document.addEventListener('deviceready', _self.onDeviceReady, false)
+  },
+  methods: {
+    onDeviceReady () {
       window.open = cordova.InAppBrowser.open
       if (cordova.platformId === 'android') {
         localStorage.setItem('platform', 'android')
@@ -46,9 +50,8 @@ export default {
       } else {
         localStorage.setItem('platform', 'window')
       }
-    }
-  },
-  methods: {
+      // navigator.splashscreen.hide()
+    },
     onScroll (e) {
       const _self = this
       let _scrollTop = window.scrollY || document.documentElement.scrollTop

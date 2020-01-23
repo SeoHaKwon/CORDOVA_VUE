@@ -61,6 +61,7 @@ export default {
   name: 'FirstPage',
   data: () => {
     return {
+      USERDI: '',
       mcolor: '#D1D1D6',
       IsPop: false,
       selNum: 1,
@@ -522,19 +523,20 @@ export default {
   },
   methods: {
     checkData () {
-      if (this.$route.params.index) {
+      const _self = this
+      if (_self.$route.params.index) {
         let data = {
-          di: this.$route.params.index
+          di: _self.$route.params.index
         }
-        this.$store.dispatch('SESSION_TEMP_TO_DI', data)
+        _self.$store.dispatch('SESSION_TEMP_TO_DI', data)
           .then(res => {
-            console.log(res, ' : res of AgreePage')
-            this.$store.commit('setUserDI', res.USER_DI)
-            localStorage.setItem('DI', res.USER_DI)
+            // _self.$store.commit('setUserDI', res.USER_DI)
+            // localStorage.setItem('DI', res.USER_DI)
+            _self.USERDI = res.USER_DI
           })
       } else {
         alert('잘못된 접근입니다.')
-        this.$router.push('/')
+        _self.$router.push('/')
       }
     },
     popClose () {
@@ -557,7 +559,8 @@ export default {
     nextStep () {
       const _self = this
       if (_self.allAgree) {
-        _self.$router.push('/additionalInfor')
+        // _self.$router.push('/additionalInfor')
+        _self.$router.push({ name: 'additionalInfor', params: { 'di': _self.USERDI } })
       } else {
         alert('전체동의를 해주세요')
       }

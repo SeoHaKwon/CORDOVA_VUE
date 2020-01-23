@@ -59,7 +59,7 @@ export default {
   },
   mounted () {
     this.compName()
-    this.$store.commit('setIsAppJoin', true)
+    localStorage.setItem('DI', this.$route.params.di)
   },
   computed: {
     ...mapGetters(['getUserDI', 'getCompSeq', 'getCompName', 'getMainColor'])

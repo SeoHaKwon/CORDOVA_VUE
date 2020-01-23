@@ -18,10 +18,13 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <allow-intent href="intent:*" />
     <platform name="android">
         <allow-intent href="market:*" />
         <icon src="logo.png" />
         <splash src="splash.png" />
+        <preference name="SplashScreenDelay" value="4000" />
+        <!-- <preference name="AutoHideSplashScreen" value="false" /> -->
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />

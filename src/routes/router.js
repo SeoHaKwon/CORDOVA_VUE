@@ -39,9 +39,10 @@ export default new Router({
       component: Ask2
     },
     {
-      path: '/additionalInfor',
+      path: '/additionalInfor/:di',
       name: 'additionalInfor',
-      component: AdditionalInfor
+      component: AdditionalInfor,
+      props: true
     }
   ],
   scrollBehavior (to, from, savedPosition) {
