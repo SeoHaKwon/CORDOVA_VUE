@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.shinsung.app" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.shinsung.app" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>신성이엔지</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.
@@ -22,15 +22,37 @@
         <allow-intent href="market:*" />
     </platform>
     <platform name="ios">
+        <icon height="57" platform="ios" src="ref/icon/57x57.png" width="57" />
+        <icon height="114" platform="ios" src="ref/icon/114x114.png" width="114" />
+        <icon height="40" platform="ios" src="ref/icon/40x40.png" width="40" />
+        <icon height="80" platform="ios" src="ref/icon/80x80.png" width="80" />
+        <icon height="50" platform="ios" src="ref/icon/50x50.png" width="50" />
+        <icon height="100" platform="ios" src="ref/icon/100x100.png" width="100" />
+        <icon height="60" platform="ios" src="ref/icon/60x60.png" width="60" />
+        <icon height="120" platform="ios" src="ref/icon/120x120.png" width="120" />
+        <icon height="180" platform="ios" src="ref/icon/180x180.png" width="180" />
+        <icon height="72" platform="ios" src="ref/icon/72x72.png" width="72" />
+        <icon height="144" platform="ios" src="ref/icon/144x144.png" width="144" />
+        <icon height="76" platform="ios" src="ref/icon/76x76.png" width="76" />
+        <icon height="152" platform="ios" src="ref/icon/152x152.png" width="152" />
+        <icon height="29" platform="ios" src="ref/icon/29x29.png" width="29" />
+        <icon height="58" platform="ios" src="ref/icon/58x58.png" width="58" />
+        <icon height="87" platform="ios" src="ref/icon/87x87.png" width="87" />
+        <splash height="1136" platform="ios" src="ref/screen/640x1136.png" width="640" />
+        <splash height="1334" platform="ios" src="ref/screen/750x1334.png" width="750" />
+        <splash height="2208" platform="ios" src="ref/screen/1242x2208.png" width="1242" />
+        <splash height="1242" platform="ios" src="ref/screen/2208x1242.png" width="2208" />
+        <splash height="1536" platform="ios" src="ref/screen/2048x1536.png" width="2048" />
+        <splash height="768" platform="ios" src="ref/screen/1024x768.png" width="1024" />
+        <splash height="2048" platform="ios" src="ref/screen/1536x2048.png" width="1536" />
+        <splash height="1024" platform="ios" src="ref/screen/768x1024.png" width="768" />
+        <splash height="960" platform="ios" src="ref/screen/640x960.png" width="640" />
+        <splash height="480" platform="ios" src="ref/screen/320x480.png" width="320" />
+        <splash height="2436" platform="ios" src="ref/screen/1125x2436.png" width="1125" />
+        <splash height="1125" platform="ios" src="ref/screen/2436x1125.png" width="2436" />
+    </platform>
+    <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
-        <splash src="res/320x480.svg" width="320" height="480"/>
-        <splash src="res/320x480.svg" width="640" height="960"/>
-        <splash src="res/768x1024.svg" width="768" height="1024"/>
-        <splash src="res/768x1024.svg" width="1536" height="2048"/>
-        <splash src="res/640x1136.svg" width="640" height="1136"/>
-        <splash src="res/750x1334.svg" width="750" height="1334"/>
-        <splash src="res/750x1334.svg" width="1242" height="2208"/>
-        <splash src="res/375x812.svg" width="1125" height="2436"/>
     </platform>
 </widget>

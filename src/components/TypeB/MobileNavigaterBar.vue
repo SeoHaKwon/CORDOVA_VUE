@@ -431,7 +431,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 27px;
+    margin-top: 3.2vh;
 
     .header-menu {
       position: absolute;

@@ -104,8 +104,8 @@ button {
   border: 0;
 }
     .wrap {
-      height:100%;
-      padding:22px 34px 100px 22px;
+      height:100vh;
+      padding:44px 34px 100px 22px;
     }
     .logo {
       margin-bottom:40px;

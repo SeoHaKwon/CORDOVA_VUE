@@ -36,9 +36,9 @@ export default {
       console.log(localStorage.getItem('DI'), 'is localStorage DI 없음')
       _self.$store.commit('setIsAppJoin', false)
     }
-    document.addEventListener('deviceready', onDeviceReady, false)
-    function onDeviceReady () {
+    document.addEventListener('deviceready', function () {
       window.open = cordova.InAppBrowser.open
+      window.LaunchScreen.hide()
       if (cordova.platformId === 'android') {
         localStorage.setItem('platform', 'android')
       } else if (cordova.platformId === 'ios') {
@@ -46,7 +46,7 @@ export default {
       } else {
         localStorage.setItem('platform', 'window')
       }
-    }
+    }, false)
   },
   methods: {
     onScroll (e) {
