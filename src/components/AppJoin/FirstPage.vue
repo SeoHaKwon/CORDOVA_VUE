@@ -85,9 +85,6 @@ export default {
                 ref.close()
                 _self.$router.push({ name: 'agreeStep', params: { 'index': _self.remoteaddr } })
               }
-              ref.insertCSS({
-                code: 'body { background-color: white; }'
-              })
             })
             ref.origin.y = 0
             resolve()

@@ -42,7 +42,8 @@ export default {
       isStock: '',
       isStart: false,
       CNAME: '',
-      mcolor: '#D1D1D6'
+      mcolor: '#D1D1D6',
+      di: ''
     }
   },
   watch: {
@@ -58,7 +59,9 @@ export default {
   },
   mounted () {
     this.compName()
+    this.di = this.$route.params.di
     localStorage.setItem('DI', this.$route.params.di)
+    alert(localStorage.getItem('DI'), ' : this USER DI in mounted')
   },
   computed: {
     ...mapGetters(['getUserDI', 'getCompSeq', 'getCompName', 'getMainColor'])
@@ -83,10 +86,12 @@ export default {
     startApp () {
       const _self = this
       if (_self.isStart) {
-        if (_self.getUserDI) {
-          _self.insertData(_self.getUserDI)
-        } else if (localStorage.getItem('DI')) {
+        if (localStorage.getItem('DI')) {
           _self.insertData(localStorage.getItem('DI'))
+        } else if (_self.di) {
+          _self.insertData(_self.di)
+        } else if (_self.getUserDI) {
+          _self.insertData(_self.getUserDI)
         } else {
           alert('잘못된 접근 입니다.')
           _self.$router.push('/firstStep')

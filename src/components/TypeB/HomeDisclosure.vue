@@ -6,7 +6,7 @@
     </h3>
     <ul class="disclosure-info">
         <li v-for="(item, idx) in disclo" v-on:click="GSITE(item.SITEURL)" v-bind:key="idx">
-            <h5>{{ item.TITLE }}</h5>
+            <h5>{{ item.TITLE | v_title }}</h5>
             <h6>
                 {{ item.REG_DATE | v_date}}
             </h6>
@@ -58,6 +58,14 @@ export default {
       const month = key.getMonth() + 1
       const day = key.getDate()
       return year + '년 ' + month + '월 ' + day + '일'
+    },
+    v_title: function (titles) {
+      const title = titles
+      if (title.length > 100) {
+        return title.substr(0, 100)
+      } else {
+        return title
+      }
     }
   },
   methods: {
