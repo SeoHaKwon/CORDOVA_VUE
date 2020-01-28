@@ -79,16 +79,17 @@ export default {
           return new Promise((resolve, reject) => {
             _self.createSecureData()
             _self.encodeData = res.data
-            var ref = cordova.InAppBrowser.open('https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb?m=' + _self.m + '&EncodeData=' + _self.encodeData + '&param_r2=' + _self.seq + '&param_r1=' + _self.remoteaddr, '_SELF', 'width=500,height=550,top=100,left=100,fullscreen=no,menubar=no,status=no,toolbar=no,titlebar=yes,location=no,scrollbar=no')
-            ref.addEventListener('exit', function (event) {
-              // alert('Exit!!!')
-            })
+            var ref = cordova.InAppBrowser.open('https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb?m=' + _self.m + '&EncodeData=' + _self.encodeData + '&param_r2=' + _self.seq + '&param_r1=' + _self.remoteaddr, '_SELF', 'width=500,top=0,left=100,fullscreen=yes,menubar=no,status=no,toolbar=no,titlebar=yes,location=no,scrollbar=no')
             ref.addEventListener('loadstop', function (event) {
               if (event.url.indexOf('setMember') !== -1) {
                 ref.close()
                 _self.$router.push({ name: 'agreeStep', params: { 'index': _self.remoteaddr } })
               }
+              ref.insertCSS({
+                code: 'body { background-color: white; }'
+              })
             })
+            ref.origin.y = 0
             resolve()
           })
         })

@@ -119,9 +119,10 @@ export default {
     getGoURL (pdf, url) {
       // const _self = this
       if (pdf) {
-        window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + pdf, '_BLANK')
+        let iabRef = window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + pdf, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=완료,toolbarcolor=#ffffff,hardwareback=yes')
+        iabRef.size.height = 0
       } else if (url) {
-        window.open(url, '_BLANK')
+        window.open(url, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=완료,toolbarcolor=#ffffff,hardwareback=yes')
       }
     },
     getContents (quat, idx) {

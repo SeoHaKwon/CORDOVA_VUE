@@ -390,6 +390,7 @@ input {
     z-index: 9999999999;
     font-size: 20px;
     font-weight: 700;
+    margin-top: 5vh;
 
     img {
       margin-right: 10px;

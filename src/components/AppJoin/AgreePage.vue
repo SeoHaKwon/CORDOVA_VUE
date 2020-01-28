@@ -583,7 +583,7 @@ button {
    height:100%;
    padding-bottom:100px;
    .content {
-     padding:0 34px;
+     padding:34px 34px 0px 34px;
    }
  }
  .header {

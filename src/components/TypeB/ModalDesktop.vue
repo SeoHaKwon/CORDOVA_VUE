@@ -65,6 +65,7 @@ export default {
       border: 1px solid #C7C7CC;
       border-radius: 6px;
       background: #fff;
+      margin-top: 5vh;
     }
   }
 
@@ -88,6 +89,7 @@ export default {
       background: #fff;
       height: 100%;
       overflow-y: auto;
+      margin-top: 5vh;
     }
   }
 }
