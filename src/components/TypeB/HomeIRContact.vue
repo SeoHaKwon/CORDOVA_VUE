@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     goURL (url) {
-      window.open(url, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=완료,toolbarcolor=#ffffff,hardwareback=yes')
+      window.open(url, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=닫기,toolbarcolor=#ffffff,hardwareback=yes')
     },
     getData () {
       const _self = this

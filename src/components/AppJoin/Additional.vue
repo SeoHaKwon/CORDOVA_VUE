@@ -121,6 +121,7 @@ button {
  .wrap {
    height:100%;
    padding-bottom:100px;
+   margin-top: 5vh;
    .content {
      padding:0 34px;
    }

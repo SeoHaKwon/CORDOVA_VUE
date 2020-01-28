@@ -19,7 +19,6 @@ export default {
   mounted () {
     const _self = this
     const param = {
-      // 'url': window.location.hostname
       'url': 'shinsungeng.irpage.co.kr'
     }
     if (localStorage.getItem('DI')) {
@@ -32,9 +31,8 @@ export default {
         _self.$store.dispatch('GET_USER_HP', localStorage.getItem('DI'))
           .then(res => {
             if (!res || res.length < 50) {
-              console.log(res, ' : !res in MainHome')
               _self.$store.commit('setIsAppJoin', false)
-              _self.$router.push('/firstStep')
+              // _self.$router.push('/firstStep')
             } else {
               console.log(res, ' : res in MainHome')
               _self.$store.commit('setUserDI', res.USER_DI)

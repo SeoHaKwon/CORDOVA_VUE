@@ -178,7 +178,9 @@ export default {
     },
     goMenuBtn (cname) {
       const _self = this
-      location.href = '#' + cname
+      // location.href = '#' + cname
+      const top = document.getElementById(cname).offsetTop
+      document.documentElement.scrollTop = Number(top - 50)
       _self.changesetPopup(cname)
     },
     changesetPopup (cname) {
@@ -191,9 +193,9 @@ export default {
         document.querySelector('.menu-trigger').classList.add('active-7')
         document.querySelector('.menu-trigger').classList.remove('type7')
       }
-      setTimeout(function () {
-        location.href = `#${cname}`
-      }, 50)
+      // setTimeout(function () {
+      //   location.href = `#${cname}`
+      // }, 50)
     },
     setPopup () {
       this.isBackMobileView ? this.isBackMobileView = false : this.isBackMobileView = true

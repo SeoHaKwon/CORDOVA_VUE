@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     getData (FILE) {
-      window.open('https://file.irgo.co.kr/data/IRPAGE/FINANCE/' + FILE, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=완료,toolbarcolor=#ffffff,hardwareback=yes')
+      window.open('https://file.irgo.co.kr/data/IRPAGE/FINANCE/' + FILE, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=닫기,toolbarcolor=#ffffff,hardwareback=yes')
     },
     setQuarter (Q, idx) {
       const _self = this
@@ -208,6 +208,9 @@ export default {
         // padding: 38px 0;
         padding: 55px 0;
         border-top: 8px solid #EFEFF4;
+        .fin {
+          margin-top: 50px;
+        }
 
         .finance-select {
             display: flex;

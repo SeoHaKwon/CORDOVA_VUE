@@ -582,6 +582,7 @@ button {
  .wrap {
    height:100%;
    padding-bottom:100px;
+   margin-top: 5vh;
    .content {
      padding:34px 34px 0px 34px;
    }
@@ -791,3 +792,4 @@ button {
     }
   }
  </style>
+ 

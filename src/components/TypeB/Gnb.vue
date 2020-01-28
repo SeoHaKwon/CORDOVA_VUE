@@ -211,7 +211,7 @@ input {
   overflow: hidden;
 }
 .mobile-global-body {
-  margin-top: $mobile-global-margin-top;
+  padding-top: $mobile-global-margin-top;
 }
 .flex-lefet-center {
   display: flex;
@@ -390,7 +390,7 @@ input {
     z-index: 9999999999;
     font-size: 20px;
     font-weight: 700;
-    margin-top: 5vh;
+    padding-top: 5vh;
 
     img {
       margin-right: 10px;

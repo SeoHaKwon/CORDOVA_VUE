@@ -78,9 +78,6 @@ export default {
     HomeAppBanner,
     PerformanceFAQ,
     PerformanceFAQTypeB
-  },
-  mounted () {
-    console.log(this.$push)
   }
 }
 </script>
@@ -254,11 +251,12 @@ select::-ms-expand {
   }
 
   .section-title {
-      padding: 0 16px;
+    padding: 0 16px;
     font-weight: bold;
     font-size: 32px;
     color: $font-color-base;
     position: relative;
+    line-height: 1;
 
     &::after {
       display: none;
@@ -266,11 +264,12 @@ select::-ms-expand {
   }
 
   .section-title-roboto {
-      padding: 0 16px;
+    padding: 0 16px;
     font-weight: bold;
     font-size: 32px;
     color: $font-color-base;
     position: relative;
+    line-height: 1;
 
     &::after {
       display: none;

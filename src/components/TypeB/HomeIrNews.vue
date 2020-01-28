@@ -132,7 +132,7 @@ export default {
   },
   methods: {
     ViewFile (URL) {
-      window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + URL, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=완료,toolbarcolor=#ffffff,hardwareback=yes')
+      window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + URL, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=닫기,toolbarcolor=#ffffff,hardwareback=yes')
     },
     clickModal (isOpen, idx) {
       const globalBody = document.getElementsByTagName('html')[0]
