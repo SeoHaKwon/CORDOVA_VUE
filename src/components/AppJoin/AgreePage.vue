@@ -2,7 +2,6 @@
 <template>
   <div class="wrap">
     <div class="header">
-      <a href="#" class="btn-link"></a>
       <strong>약관동의</strong>
     </div>
     <div class="content">

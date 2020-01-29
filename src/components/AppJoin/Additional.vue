@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <div class="header">
-      <a href="#" class="btn-link" v-on:click="$router.go(-1)"></a>
+      <a href="javascript:void(0)" class="btn-link" v-on:click="goBackBtn"></a>
       <strong>추가정보</strong>
     </div>
     <div class="content">
@@ -60,13 +60,14 @@ export default {
   mounted () {
     this.compName()
     this.di = this.$route.params.di
-    localStorage.setItem('DI', this.$route.params.di)
-    alert(localStorage.getItem('DI'), ' : this USER DI in mounted')
   },
   computed: {
     ...mapGetters(['getUserDI', 'getCompSeq', 'getCompName', 'getMainColor'])
   },
   methods: {
+    goBackBtn () {
+      _self.$router.push({ name: 'agreeStep', params: { 'index': this.$route.params.di } })
+    },
     compName () {
       if (this.getCompName) {
         this.CNAME = this.getCompName
@@ -85,9 +86,10 @@ export default {
     },
     startApp () {
       const _self = this
+      localStorage.setItem('DI', this.$route.params.di)
       if (_self.isStart) {
-        if (localStorage.getItem('DI')) {
-          _self.insertData(localStorage.getItem('DI'))
+        if (this.$route.params.di) {
+          _self.insertData(this.$route.params.di)
         } else if (_self.di) {
           _self.insertData(_self.di)
         } else if (_self.getUserDI) {
@@ -104,7 +106,8 @@ export default {
         'di': di,
         'stock': _self.isStock,
         'email': _self.email,
-        'seq': _self.getCompSeq
+        'seq': _self.getCompSeq,
+        'token': localStorage.getItem('getToken')
       }
       _self.$store.dispatch('SET_APP_DATA', params)
         .then(res => {

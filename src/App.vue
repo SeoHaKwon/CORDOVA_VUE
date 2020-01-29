@@ -45,6 +45,14 @@ export default {
       } else {
         localStorage.setItem('platform', 'window')
       }
+      FCMPlugin.getToken(
+        function (token) {
+          localStorage.setItem('getToken', token)
+        },
+        function (err) {
+          console.log(err)
+        }
+      )
     }, false)
   },
   methods: {
