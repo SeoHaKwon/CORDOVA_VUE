@@ -51,6 +51,14 @@ export default {
         localStorage.setItem('platform', 'window')
       }
       // navigator.splashscreen.hide()
+      FCMPlugin.getToken(
+        function (token) {
+          localStorage.setItem('getToken', token)
+        },
+        function (err) {
+          alert(err)
+        }
+      )
     },
     onScroll (e) {
       const _self = this

@@ -100,7 +100,8 @@ export default {
         'di': di,
         'stock': _self.isStock,
         'email': _self.email,
-        'seq': _self.getCompSeq
+        'seq': _self.getCompSeq,
+        'token': localStorage.getItem('getToken')
       }
       _self.$store.dispatch('SET_APP_DATA', params)
         .then(res => {

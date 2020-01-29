@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "77652232373",
+    "firebase_url": "https://shinsung-856ea.firebaseio.com",
+    "project_id": "shinsung-856ea",
+    "storage_bucket": "shinsung-856ea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:77652232373:android:360904a3c4ecbf581356fc",
+        "android_client_info": {
+          "package_name": "com.shinsung.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "77652232373-gqdd8psaa94ru7epngvprikg2rk6hmn2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6P1Bf-XDg0o1ahy6GaVAeXIgvNCRrBcw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "77652232373-gqdd8psaa94ru7epngvprikg2rk6hmn2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
