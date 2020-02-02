@@ -97,7 +97,7 @@ export default {
   },
   methods: {
     getData (FILE) {
-      window.open('https://file.irgo.co.kr/data/IRPAGE/FINANCE/' + FILE, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=닫기,toolbarcolor=#ffffff,hardwareback=yes')
+      window.open('https://file.irgo.co.kr/data/IRPAGE/FINANCE/' + FILE, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=닫기,toolbarcolor=#ffffff,hardwareback=yes,usewkwebview=no')
     },
     setQuarter (Q, idx) {
       const _self = this

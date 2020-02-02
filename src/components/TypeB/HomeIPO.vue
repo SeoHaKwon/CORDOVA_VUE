@@ -107,9 +107,9 @@ export default {
   methods: {
     goURL (type, url, file) {
       if (type === 'URL') {
-        window.open(url, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=닫기,toolbarcolor=#ffffff,hardwareback=yes')
+        window.open(url, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=닫기,toolbarcolor=#ffffff,hardwareback=no')
       } else if (type === 'PDF') {
-        window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + file, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=닫기,toolbarcolor=#ffffff,hardwareback=yes')
+        window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + file, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=닫기,toolbarcolor=#ffffff,hardwareback=yes,usewkwebview=no')
       }
     },
     getIPOData () {

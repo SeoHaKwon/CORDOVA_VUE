@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>77652232373-01stklck4mcf7rvoeb1ualjnetq9vgb4.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.77652232373-01stklck4mcf7rvoeb1ualjnetq9vgb4</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDSUF8FNBD9vPSftt-vQNNn0yoWoKlqwMs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>77652232373</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.shinsung.app</string>
+	<key>PROJECT_ID</key>
+	<string>shinsung-856ea</string>
+	<key>STORAGE_BUCKET</key>
+	<string>shinsung-856ea.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:77652232373:ios:8f64bcd1067e3e2f1356fc</string>
+	<key>DATABASE_URL</key>
+	<string>https://shinsung-856ea.firebaseio.com</string>
+</dict>
+</plist>

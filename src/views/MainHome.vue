@@ -23,8 +23,7 @@ export default {
     }
     if (localStorage.getItem('DI')) {
       _self.$store.commit('setIsAppJoin', true)
-    }
-    _self.$store.dispatch('SET_INFO', param)
+      _self.$store.dispatch('SET_INFO', param)
       .then(resp => {
         localStorage.setItem('SEQ', resp.COMP_SEQ)
         localStorage.setItem('CNAME', resp.COMP_NAME)
@@ -39,6 +38,7 @@ export default {
             }
           })
       })
+    }
   }
 }
 </script>

@@ -32,28 +32,26 @@ export default {
   },
   beforeCreate () {
     const _self = this
-    if (!localStorage.getItem('DI')) {
-      _self.$store.commit('setIsAppJoin', false)
-    }
-    document.addEventListener('deviceready', function () {
-      window.open = cordova.InAppBrowser.open
-      window.LaunchScreen.hide()
-      if (cordova.platformId === 'android') {
-        localStorage.setItem('platform', 'android')
-      } else if (cordova.platformId === 'ios') {
-        localStorage.setItem('platform', 'ios')
-      } else {
-        localStorage.setItem('platform', 'window')
-      }
-      FCMPlugin.getToken(
-        function (token) {
-          localStorage.setItem('getToken', token)
-        },
-        function (err) {
-          console.log(err)
+      document.addEventListener('deviceready', function () {
+        window.open = cordova.InAppBrowser.open
+        if (!localStorage.getItem('DI')) {
+          _self.$store.commit('setIsAppJoin', false)
+          var inter = setInterval(function () {
+            FCMPlugin.getToken(function (token) {
+              if (token) {
+                localStorage.setItem('getToken', token)
+                navigator.splashscreen.hide()
+                clearInterval(inter)
+              }
+            })
+          }, 500)
+          _self.$router.push({ name: 'firstStep' })
+        } else {
+          setTimeout(function () {
+            navigator.splashscreen.hide()
+          }, 3000)
         }
-      )
-    }, false)
+      }, false)
   },
   methods: {
     onScroll (e) {

@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     GSITE (url) {
-      window.open(url, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=닫기,toolbarcolor=#ffffff,hardwareback=yes')
+      window.open(url, '_BLANK', 'location=no,toolbar=yes,titlebar=no,enableViewportScale=yes,closebuttoncaption=닫기,toolbarcolor=#ffffff,hardwareback=yes,usewkwebview=no')
     },
     moreData () {
       const _self = this
