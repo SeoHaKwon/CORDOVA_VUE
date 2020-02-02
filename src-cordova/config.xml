@@ -23,7 +23,7 @@
         <allow-intent href="market:*" />
         <icon src="logo.png" />
         <splash src="splash.png" />
-        <preference name="SplashScreenDelay" value="4000" />
+        <preference name="AutoHideSplashScreen" value="false" />
         <!-- <preference name="AutoHideSplashScreen" value="false" /> -->
     </platform>
     <platform name="ios">

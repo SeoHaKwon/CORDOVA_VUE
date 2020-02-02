@@ -32,34 +32,29 @@ export default {
   },
   beforeCreate () {
     const _self = this
-    if (!localStorage.getItem('DI')) {
-      _self.$store.commit('setIsAppJoin', false)
-    }
-  },
-  mounted () {
-    const _self = this
-    document.addEventListener('deviceready', _self.onDeviceReady, false)
+    document.addEventListener('deviceready', function () {
+      window.open = cordova.InAppBrowser.open
+      if (!localStorage.getItem('DI')) {
+        var inter = setInterval(function () {
+          FCMPlugin.getToken(
+            function (token) {
+              if (token) {
+                localStorage.setItem('getToken', token)
+                navigator.splashscreen.hide()
+                clearInterval(inter)
+                _self.$store.commit('setIsAppJoin', false)
+                _self.$router.push('/firstStep')
+              }
+            })
+        }, 500)
+      } else {
+        setTimeout(function () {
+          navigator.splashscreen.hide()
+        }, 3000)
+      }
+    }, false)
   },
   methods: {
-    onDeviceReady () {
-      window.open = cordova.InAppBrowser.open
-      if (cordova.platformId === 'android') {
-        localStorage.setItem('platform', 'android')
-      } else if (cordova.platformId === 'ios') {
-        localStorage.setItem('platform', 'ios')
-      } else {
-        localStorage.setItem('platform', 'window')
-      }
-      // navigator.splashscreen.hide()
-      FCMPlugin.getToken(
-        function (token) {
-          localStorage.setItem('getToken', token)
-        },
-        function (err) {
-          alert(err)
-        }
-      )
-    },
     onScroll (e) {
       const _self = this
       let _scrollTop = window.scrollY || document.documentElement.scrollTop
