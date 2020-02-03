@@ -132,7 +132,7 @@ export default {
   },
   methods: {
     ViewFile (URL) {
-      window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + URL, '_BLANK')
+      window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + URL, '_BLANK', 'width=500,height=550,top=100,left=100,fullscreen=no,menubar=no,status=no,toolbar=no,titlebar=yes,location=no')
     },
     clickModal (isOpen, idx) {
       const globalBody = document.getElementsByTagName('html')[0]

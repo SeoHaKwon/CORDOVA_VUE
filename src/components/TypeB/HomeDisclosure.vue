@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     GSITE (url) {
-      window.open(url, '_BLANK')
+      window.open(url, '_BLANK', 'width=500,height=550,top=100,left=100,fullscreen=no,menubar=no,status=no,toolbar=no,titlebar=yes,location=no')
     },
     moreData () {
       const _self = this

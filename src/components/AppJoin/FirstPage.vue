@@ -77,16 +77,19 @@ export default {
       axios.post('https://api.irpage.co.kr/api/irgo/getMemberInfo')
         .then(res => {
           return new Promise((resolve, reject) => {
+            // 고유 SESSION ID 값 생성
             _self.createSecureData()
             _self.encodeData = res.data
-            var ref = cordova.InAppBrowser.open('https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb?m=' + _self.m + '&EncodeData=' + _self.encodeData + '&param_r2=' + _self.seq + '&param_r1=' + _self.remoteaddr, '_BLANK', 'width=500,height=550,top=100,left=100,fullscreen=no,menubar=no,status=no,toolbar=no,titlebar=yes,location=no,scrollbar=no,clearcache=no,clearsessioncache=no')
-            ref.addEventListener('exit', function (event) {
-              // alert('Exit!!!')
-            })
+            // 이미 window.open 객체에 cordova.InAppBrowser.open 을 넣어 놨기 때문에 
+            // window.open으로 해도되지만 그냥 cordova.InAppBrowser.open으로 넣어두었음.
+            var ref = cordova.InAppBrowser.open('https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb?m=' + _self.m + '&EncodeData=' + _self.encodeData + '&param_r2=' + _self.seq + '&param_r1=' + _self.remoteaddr, '_BLANK', 'width=500,height=550,top=100,left=100,fullscreen=no,menubar=no,status=no,toolbar=no,titlebar=yes,location=no')
             ref.addEventListener('loadstop', function (event) {
               if (event.url.indexOf('setMember') !== -1) {
+                // 어차피 추가정보 입력시에 DB검사를 통하여 인증이 된 회원인지 검사를 하기때문에 현재로써
+                // 인증은 성공했다고 가정할 수 있음
                 ref.close()
                 _self.$router.push({ name: 'agreeStep', params: { 'index': _self.remoteaddr } })
+                // setMember URL 진입시 해당 인앱창을 닫고 다음페이지로 이동
               }
             })
             resolve()

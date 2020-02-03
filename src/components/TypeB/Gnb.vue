@@ -3,6 +3,7 @@
     <div class="desktop-header">
       <NavigationBar :scrollResult="scrollTemp"/>
     </div>
+    <!-- /ask가 아닌경우는 FAQ 질문하기 페이지 진입시 상단의 헤더가 보여지지 않게 하기 위함이다. -->
     <div class="mobile-header" v-if="$route.fullPath !== '/ask'">
       <MobileNavigaterBar :scrollResult="scrollTemp"/>
     </div>
@@ -15,6 +16,7 @@
     <template v-if="$route.fullPath !== '/ask'">
       <footerBody />
     </template>
+    <!-- 하단의 팝업창은 앱으로의 접근이 아닌 모바일웹으로의 접근시 보여주어야 한다. -->
     <div v-if="isAppDownloadModal" class="app-download-modal">
       <div class="content">
         <h3>주주와 함께하는 {{ cname }}</h3>
