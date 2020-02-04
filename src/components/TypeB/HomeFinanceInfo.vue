@@ -5,8 +5,8 @@
       Financial Statements
     </h3>
     <ul class="performance-group-tab fin">
-      <li v-for="(item, idx) in finance" v-on:click="setQuarter(idx)" :class="isActive[idx]" v-bind:key="item.YEAR">
-        <a>{{finance[nowQ].YEAR.substr(2,2)}}.{{finance[nowQ].PERIOD}}Q</a>
+      <li v-for="(item, idx) in finance" v-on:click="setQuarter(idx)" :class="isActive[idx]" v-bind:key="idx">
+        <a>{{item.YEAR.substr(2,2)}}.{{item.PERIOD}}Q</a>
       </li>
       <li v-for="n in finlen" v-bind:key="n"></li>
     </ul>

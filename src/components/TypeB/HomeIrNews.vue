@@ -495,7 +495,7 @@ export default {
                         -webkit-line-clamp: 2;
                         -webkit-box-orient: vertical;
                         line-height: 1.2em;
-                        height: 2.4em;
+                        height: 2.5em;
                     }
                     & h6 {
                         font-size: 10px;

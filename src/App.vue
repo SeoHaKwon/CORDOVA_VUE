@@ -35,6 +35,9 @@ export default {
     document.addEventListener('deviceready', function () {
       // navigator.splashscreen 및 FCMPlugin 객체는 deviceready 에서만 가능
       window.open = cordova.InAppBrowser.open
+      document.addEventListener('backbutton', function () {
+        navigator.app.exitApp()
+      }, false)
       if (!localStorage.getItem('DI')) {
         // token이 localStorage에 없는 우에는 토큰을 받아올 때까지 interval을 주어 받아온다.
         var inter = setInterval(function () {

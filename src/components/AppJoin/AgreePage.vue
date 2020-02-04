@@ -8,22 +8,26 @@
     <div class="check-section">
       <div class="all">
         <p class="check-box">
-          <input type="checkbox" v-model="allAgree" v-on:click="allAgreeClick">
+          <input type="checkbox" id="checkbox-1" v-model="allAgree" v-on:click="allAgreeClick">
+          <label for="checkbox-1"><span class="mycolor" :style="{'background-color': acolor}"></span></label>
           <span>전체동의</span>
         </p>
       </div>
         <p class="check-box">
-          <input type="checkbox" v-model="serviceAgree">
+          <input type="checkbox" id="checkbox-2" v-model="serviceAgree">
+          <label for="checkbox-2"><span class="mycolor" :style="{'background-color': bcolor}"></span></label>
           <span>(필수) 이용약관</span>
           <button class="btn-view" v-on:click="popOpen(0)">보기</button>
         </p>
         <p class="check-box">
-          <input type="checkbox" v-model="infoAgree">
+          <input type="checkbox" id="checkbox-3" v-model="infoAgree">
+          <label for="checkbox-3"><span class="mycolor" :style="{'background-color': ccolor}"></span></label>
           <span>(필수) 개인정보 수집 및 이용 안내</span>
           <button class="btn-view" v-on:click="popOpen(1)">보기</button>
         </p>
         <p class="check-box">
-          <input type="checkbox" v-model="giveAgree">
+          <input type="checkbox" id="checkbox-4" v-model="giveAgree">
+          <label for="checkbox-4"><span class="mycolor" :style="{'background-color': dcolor}"></span></label>
           <span>(필수) 제 3자 제공동의</span>
           <button class="btn-view" v-on:click="popOpen(2)">보기</button>
         </p>
@@ -61,7 +65,7 @@ export default {
   name: 'FirstPage',
   data: () => {
     return {
-      USERDI: '',
+      bcolor: 'white',
       mcolor: '#D1D1D6',
       IsPop: false,
       selNum: 1,
@@ -486,12 +490,19 @@ export default {
       const _self = this
       if (_self.allAgree) {
         _self.mcolor = '#' + _self.getMainColor
+        _self.acolor = '#' + _self.getMainColor
       } else {
         _self.mcolor = '#D1D1D6'
+        _self.acolor = 'white'
       }
     },
     serviceAgree () {
       const _self = this
+      if (_self.serviceAgree) {
+        _self.bcolor = '#' + _self.getMainColor
+      } else {
+        _self.bcolor = 'white'
+      }
       if (_self.giveAgree && _self.infoAgree && _self.serviceAgree) {
         _self.allAgree = true
       } else {
@@ -500,6 +511,11 @@ export default {
     },
     infoAgree () {
       const _self = this
+      if (_self.infoAgree) {
+        _self.ccolor = '#' + _self.getMainColor
+      } else {
+        _self.ccolor = 'white'
+      }
       if (_self.giveAgree && _self.infoAgree && _self.serviceAgree) {
         _self.allAgree = true
       } else {
@@ -508,6 +524,11 @@ export default {
     },
     giveAgree () {
       const _self = this
+      if (_self.giveAgree) {
+        _self.dcolor = '#' + _self.getMainColor
+      } else {
+        _self.dcolor = 'white'
+      }
       if (_self.giveAgree && _self.infoAgree && _self.serviceAgree) {
         _self.allAgree = true
       } else {
@@ -515,30 +536,19 @@ export default {
       }
     },
     '$route.params' () {
-      this.checkData()
+      if (this.$route.params.dupidx) {
+        this.$store.commit('setUserDI', this.$route.params.dupidx)
+        localStorage.setItem('DI', this.$route.params.dupidx)
+      }
     }
   },
   mounted () {
-    this.checkData()
+    if (this.$route.params.dupidx) {
+      this.$store.commit('setUserDI', this.$route.params.dupidx)
+      localStorage.setItem('DI', this.$route.params.dupidx)
+    }
   },
   methods: {
-    checkData () {
-      const _self = this
-      if (_self.$route.params.index) {
-        let data = {
-          di: _self.$route.params.index
-        }
-        _self.$store.dispatch('SESSION_TEMP_TO_DI', data)
-          .then(res => {
-            // _self.$store.commit('setUserDI', res.USER_DI)
-            // localStorage.setItem('DI', res.USER_DI)
-            _self.USERDI = res.USER_DI
-          })
-      } else {
-        alert('잘못된 접근입니다.')
-        _self.$router.push('/')
-      }
-    },
     popClose () {
       const _self = this
       _self.IsPop = false
@@ -559,8 +569,7 @@ export default {
     nextStep () {
       const _self = this
       if (_self.allAgree) {
-        // _self.$router.push('/additionalInfor')
-        _self.$router.replace({ name: 'additionalInfor', params: { 'di': _self.USERDI } })
+        _self.$router.push('/additionalInfor')
       } else {
         alert('전체동의를 해주세요')
       }
@@ -640,6 +649,8 @@ button {
     }
   }
   .check-box {
+    --border-radius: 0;
+    padding: 5px;
     position:relative;
     padding-right:46px;
     .btn-view {
@@ -655,32 +666,52 @@ button {
       transform: translateY(-50%);
       background:none;
     }
-    input {
-      position:absolute;
-      left:0;
-      top:0;
-      width:calc(100% - 47px);
-      height:100%;
-      opacity: 0;
-      &:checked {
-        & + span {
-          background:url(../../assets/btn/btn_check_on.png) no-repeat left center;
-        }
-      }
-    }
-    span {
-      padding-left:24px;
-      background:url(../../assets/btn/btn_check.png) no-repeat left center;
-      font-size: 16px;
-      line-height: 24px;
-      letter-spacing: -0.01em;
-      text-transform: uppercase;
-      color: #545454;
-    }
     & +.check-box {
       margin-top:33px;
     }
-  }
+}
+
+.check-box input[type="checkbox"] {
+    display: none;
+}
+
+.check-box label {
+    position: relative;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 1px solid gray;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+.check-box label .mycolor {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: background-color 0.25s;
+    padding-left: 0;
+}
+
+.check-box :checked ~ label .mycolor {
+    background-color: red;
+}
+
+.check-box span {
+    vertical-align: top;
+    transition: color 0.25s;
+    padding-left: 10px;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: -.01em;
+    text-transform: uppercase;
+    color: #545454;
+}
   .pop2 {
     height: 100vh;
     width: 100vw;
