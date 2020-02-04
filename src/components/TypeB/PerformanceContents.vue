@@ -118,10 +118,8 @@ export default {
   methods: {
     getGoURL (pdf, url) {
       // const _self = this
-      console.log(pdf + ' : this pdf')
-      console.log(url + ' : this url')
       if (pdf) {
-        window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + pdf, '_BLANK', 'width=500,height=550,top=100,left=100,fullscreen=yes,menubar=no,status=no,toolbar=no,titlebar=no,location=no')
+        window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + pdf, '_system', 'toolbar=no,titlebar=no,location=no,EnableViewPortScale=yes,hardwareback=no')
       } else if (url) {
         window.open(url, '_BLANK', 'width=500,height=550,top=100,left=100,fullscreen=yes,menubar=no,status=no,toolbar=no,titlebar=no,location=no')
       }

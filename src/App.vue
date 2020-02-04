@@ -36,17 +36,17 @@ export default {
       // navigator.splashscreen 및 FCMPlugin 객체는 deviceready 에서만 가능
       window.open = cordova.InAppBrowser.open
       if (!localStorage.getItem('DI')) {
-        // token이 localStorage에 없는 경우에는 토큰을 받아올 때까지 interval을 주어 받아온다.
-        FCMPlugin.getToken(
-          function (token) {
-            // token이 있는 경우에만 splashscreen을 종료하고 token을 localStorage에 세팅한 후에 
-            // firstStep, 즉, 회원가입 제일 첫화면으로 이동시켜준다.
-            // getIsAppJoin은 상단의 헤더나 하단 푸터를 회원가입중에 보여지기도 해서 넣은 파라메터임.
+        // token이 localStorage에 없는 우에는 토큰을 받아올 때까지 interval을 주어 받아온다.
+        var inter = setInterval(function () {
+          window.FirebasePlugin.getToken(token => {
             if (token) {
               localStorage.setItem('getToken', token)
               navigator.splashscreen.hide()
+              clearInterval(inter)
+              _self.$router.replace('firstStep')
             }
           })
+        }, 500)
       } else {
         // token이 스토리지에 있는 경우 splashscreen을 종료 시켜주고 메인을 보여준다.
         setTimeout(function () {

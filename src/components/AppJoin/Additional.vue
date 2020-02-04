@@ -90,7 +90,7 @@ export default {
           _self.insertData(localStorage.getItem('DI'))
         } else {
           alert('잘못된 접근 입니다.')
-          _self.$router.push('/firstStep')
+          _self.$router.replace('/firstStep')
         }
       }
     },
@@ -107,7 +107,7 @@ export default {
         .then(res => {
           _self.$store.commit('setIsAppJoin', true)
           _self.$store.commit('setUserDI', di)
-          _self.$router.push('/')
+          _self.$router.replace('/')
         })
     }
   }

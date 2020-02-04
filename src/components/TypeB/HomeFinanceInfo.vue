@@ -5,8 +5,8 @@
       Financial Statements
     </h3>
     <ul class="performance-group-tab fin">
-      <li v-for="(item, idx) in finance" v-on:click="setQuarter(item.YEAR + '.' + item.PERIOD + 'Q', idx)" :class="isActive[idx]" v-bind:key="item.QUARTER">
-        <a>{{ item.QUARTER }}</a>
+      <li v-for="(item, idx) in finance" v-on:click="setQuarter(idx)" :class="isActive[idx]" v-bind:key="item.YEAR">
+        <a>{{finance[nowQ].YEAR.substr(2,2)}}.{{finance[nowQ].PERIOD}}Q</a>
       </li>
       <li v-for="n in finlen" v-bind:key="n"></li>
     </ul>
@@ -20,7 +20,7 @@
     </div>
     <ul class="finance-info">
       <li v-on:click="getData(finance[nowQ].UPLOAD_FILE1)" v-if="finance[nowQ].UPLOAD_FILE1">
-        <h5>재무상태표 ({{finance[nowQ].QUARTER}})</h5>
+        <h5>재무상태표 ({{finance[nowQ].YEAR.substr(2,2)}}.{{finance[nowQ].PERIOD}}Q)</h5>
         <h6>
           <a>
             <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -31,7 +31,7 @@
         </h6>
       </li>
       <li v-on:click="getData(finance[nowQ].UPLOAD_FILE2)" v-if="finance[nowQ].UPLOAD_FILE2">
-        <h5>손익계산서 ({{finance[nowQ].QUARTER}})</h5>
+        <h5>손익계산서 ({{finance[nowQ].YEAR.substr(2,2)}}.{{finance[nowQ].PERIOD}}Q)</h5>
         <h6>
           <a>
             <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -42,7 +42,7 @@
         </h6>
       </li>
       <li v-on:click="getData(finance[nowQ].UPLOAD_FILE3)" v-if="finance[nowQ].UPLOAD_FILE3">
-        <h5>현금흐름표 ({{finance[nowQ].QUARTER}})</h5>
+        <h5>현금흐름표 ({{finance[nowQ].YEAR.substr(2,2)}}.{{finance[nowQ].PERIOD}}Q)</h5>
         <h6>
           <a>
             <svg style="width:24px;height:24px" viewBox="0 0 24 24">
@@ -58,6 +58,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import _ from 'lodash'
 
 export default {
   name: 'HomeFinanceInfo',
@@ -65,7 +66,7 @@ export default {
   },
   data: () => {
     return {
-      nowQ: '',
+      nowQ: 0,
       finance: [],
       isActive: {
         0: 'active',
@@ -97,12 +98,15 @@ export default {
   },
   methods: {
     getData (FILE) {
-      console.log('https://file.irgo.co.kr/data/IRPAGE/FINANCE/' + FILE)
-      window.open('https://file.irgo.co.kr/data/IRPAGE/FINANCE/' + FILE, '_BLANK', 'width=500,height=550,top=100,left=100,fullscreen=no,menubar=no,status=no,toolbar=no,titlebar=yes,location=no')
+      if (FILE.match('.pdf')) {
+        window.open('https://file.irgo.co.kr/data/IRPAGE/FINANCE/' + FILE, '_system')
+      } else {
+        window.open('https://file.irgo.co.kr/data/IRPAGE/FINANCE/' + FILE, '_system')
+      }
     },
-    setQuarter (Q, idx) {
+    setQuarter (idx) {
       const _self = this
-      _self.nowQ = Q
+      _self.nowQ = idx
       _self.setActive(idx)
     },
     zsetQuarter (e) {
@@ -124,18 +128,12 @@ export default {
       }
       this.$store.dispatch('GET_FINANCE', aram)
         .then(res => {
-          // _.remove(res, { 'UPLOAD_FILE1': null, 'UPLOAD_FILE2': null, 'UPLOAD_FILE3': null })
+          _.remove(res, { 'UPLOAD_FILE1': null, 'UPLOAD_FILE2': null, 'UPLOAD_FILE3': null })
           if (res.length !== 0) {
             if (res.length > 5) {
-              res.splice(0, 5)
+              res = res.splice(0, 5)
             }
             _self.finlen = 5 - res.length
-            _self.nowQ = res[0].YEAR + '.' + res[0].PERIOD + 'Q'
-            // const cons = 5 - res.length
-            for (let i = 0; i < res.length; i++) {
-              res[res[i].YEAR + '.' + res[i].PERIOD + 'Q'] = res[i]
-              res[res[i].YEAR + '.' + res[i].PERIOD + 'Q'].QUARTER = res[i].YEAR.substr(2, 2) + '.' + res[i].PERIOD + 'Q'
-            }
             _self.finance = res
           }
         })

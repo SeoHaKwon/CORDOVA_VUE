@@ -560,7 +560,7 @@ export default {
       const _self = this
       if (_self.allAgree) {
         // _self.$router.push('/additionalInfor')
-        _self.$router.push({ name: 'additionalInfor', params: { 'di': _self.USERDI } })
+        _self.$router.replace({ name: 'additionalInfor', params: { 'di': _self.USERDI } })
       } else {
         alert('전체동의를 해주세요')
       }

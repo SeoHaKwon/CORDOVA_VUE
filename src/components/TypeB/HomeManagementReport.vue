@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     openData (FILENAME) {
-      window.open('https://file.irgo.co.kr/data/IRPAGE/BIZ_REPORT/' + FILENAME, '_BLANK', 'width=500,height=550,top=100,left=100,fullscreen=no,menubar=no,status=no,toolbar=no,titlebar=yes,location=no')
+      window.open('https://file.irgo.co.kr/data/IRPAGE/BIZ_REPORT/' + FILENAME, '_system', 'width=500,height=550,top=100,left=100,fullscreen=no,menubar=no,status=no,toolbar=no,titlebar=yes,location=no')
     },
     getReport () {
       const _self = this
