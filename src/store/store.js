@@ -418,6 +418,14 @@ export default new Vuex.Store({
       }
       const res = await getAPIData(param)
       return res.data
+    },
+    async SET_LOG (context, payload) {
+      let data = {
+        data: payload,
+        url: 'setInLog'
+      }
+      const res = await getAPIData(data)
+      return res.data[0]
     }
   }
 })

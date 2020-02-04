@@ -74,7 +74,7 @@ export default {
     // bus.$off('end:spinner', this.endSpinner)
   },
   computed: {
-    ...mapGetters(['getCompName'])
+    ...mapGetters(['getCompName', 'getCompSeq'])
   },
   watch: {
     getCompName () {
@@ -112,12 +112,28 @@ export default {
     }
   },
   mounted () {
+    const _self = this
     if (window.outerWidth < 900) {
       this.isMobile = true
     }
     this.fullPath = this.$route.fullPath
     if (this.getCompName) {
       this.setTITLE()
+    }
+    /* 방문로그 시작 */
+    /* ANDROID 및 IOS는 locations에 localStorage.getItem('DI') 로 넣어주어야 함 */
+    /* 조건도 걸어주어야함. 회원가입을 했을때 넣어주어야 하기때문 */
+    if (localStorage.getItem('DI') && (!localStorage.getItem('SETLOG') || new Date().getDate() !== new Date(localStorage.getItem('SETLOG')).getDate())) {
+      const param = {
+        'locations': localStorage.getItem('DI'),
+        'platform': 'ANDROID',
+        'seq': _self.getCompSeq
+      }
+      _self.$store.dispatch('SET_LOG', param)
+        .then(res => {
+          localStorage.setItem('SETLOG', new Date())
+        })
+      /* 방문 로그 끝 */
     }
   }
 }

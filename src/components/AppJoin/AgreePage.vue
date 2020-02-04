@@ -66,6 +66,7 @@ export default {
   data: () => {
     return {
       bcolor: 'white',
+      USERDI: '',
       mcolor: '#D1D1D6',
       IsPop: false,
       selNum: 1,
@@ -536,19 +537,30 @@ export default {
       }
     },
     '$route.params' () {
-      if (this.$route.params.dupidx) {
-        this.$store.commit('setUserDI', this.$route.params.dupidx)
-        localStorage.setItem('DI', this.$route.params.dupidx)
-      }
+      this.checkData()
     }
   },
   mounted () {
-    if (this.$route.params.dupidx) {
-      this.$store.commit('setUserDI', this.$route.params.dupidx)
-      localStorage.setItem('DI', this.$route.params.dupidx)
-    }
+    this.checkData()
   },
   methods: {
+    checkData () {
+      const _self = this
+      if (_self.$route.params.index) {
+        let data = {
+          di: _self.$route.params.index
+        }
+        _self.$store.dispatch('SESSION_TEMP_TO_DI', data)
+          .then(res => {
+            // _self.$store.commit('setUserDI', res.USER_DI)
+            // localStorage.setItem('DI', res.USER_DI)
+            _self.USERDI = res.USER_DI
+          })
+      } else {
+        alert('잘못된 접근입니다.')
+        _self.$router.push('/')
+      }
+    },
     popClose () {
       const _self = this
       _self.IsPop = false
@@ -569,7 +581,8 @@ export default {
     nextStep () {
       const _self = this
       if (_self.allAgree) {
-        _self.$router.push('/additionalInfor')
+        // _self.$router.push('/additionalInfor')
+        _self.$router.push({ name: 'additionalInfor', params: { 'di': _self.USERDI } })
       } else {
         alert('전체동의를 해주세요')
       }
