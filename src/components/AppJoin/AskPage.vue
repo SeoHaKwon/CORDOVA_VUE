@@ -23,6 +23,7 @@
           (작성글은 300자 내로 제한됩니다.) <br>
           반말, 욕설, 비방, 홍보, 광고 등 부적절한 내용의 문의 내용에 대해서는 답변을 드릴 수 없으며 추후 이용에 제한을 둘 수 있습니다.
         </p>
+        <div class="max-txt"><span>{{ textData.length }}</span>/300</div>
        </div>
      </div>
     </div>
@@ -83,7 +84,7 @@ export default {
       }
     },
     goBack () {
-      this.$router.push('/')
+      this.$router.go(-1)
     },
     activeBtn () {
       if (this.textData.length === 0 && this.isFocus) {
@@ -104,8 +105,10 @@ export default {
       } else {
         _self.DI = localStorage.getItem('DI')
       }
-      if (this.textData.length === 0) {
-        alert('내용을 작성해주세요.')
+      if (this.textData.length === 0 || this.textData.replace(' ', '').length === 0) {
+        window.alert('내용을 작성 해 주세요.', false, _self.getCompName, '확인')
+      } else if (this.textData.length > 300) {
+        window.alert('글자 수가 초과되었습니다.', false, _self.getCompName, '확인')
       } else {
         const aram = {
           seq: _self.SEQ,
@@ -114,8 +117,8 @@ export default {
         }
         this.$store.dispatch('SET_QA', aram)
           .then(() => {
-            alert('문의하기 성공')
-            _self.$router.push('/')
+            window.alert('전송완료 되었습니다.', false, _self.getCompName, '확인')
+            _self.$router.replace('/')
           })
       }
     }
@@ -134,6 +137,7 @@ button {
    flex-direction: column;
    height:100%;
    min-height:568px;
+   margin-top: 5vh;
    .content {
      padding:0 34px;
      margin-bottom:auto;
@@ -259,6 +263,17 @@ button {
         line-height: 22px;
         letter-spacing: -0.5px;
         color: #8E8E93;
+      }
+    }
+    .max-txt {
+      position:absolute;
+      right:15px;
+      bottom:14px;
+      font-size: 14px;
+      line-height: 22px;
+      color: #8E8E93;
+      span {
+        color:#2f80ed;
       }
     }
   }

@@ -75,11 +75,13 @@ export default {
         .then(res => {
           _self.createSecureData()
           _self.encodeData = res.data
-          var ref = cordova.InAppBrowser.open('https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb?m=' + _self.m + '&EncodeData=' + _self.encodeData + '&param_r2=' + _self.seq + '&param_r1=' + _self.remoteaddr, '_SELF', 'fullscreen=yes,menubar=no,status=no,toolbar=no,titlebar=no,location=no,scrollbar=no,usewkwebview=no')
+          var ref = window.open('https://nice.checkplus.co.kr/CheckPlusSafeModel/checkplus.cb?m=' + _self.m + '&EncodeData=' + _self.encodeData + '&param_r2=' + _self.seq + '&param_r1=' + _self.remoteaddr, '_SELF', 'fullscreen=yes,menubar=no,status=no,toolbar=no,titlebar=no,location=no,scrollbar=no,usewkwebview=no')
           ref.addEventListener('loadstop', function (event) {
             if (event.url.indexOf('setMember') !== -1) {
-              ref.close()
-              _self.$router.push({ name: 'agreeStep', params: { 'index': _self.remoteaddr } })
+              window.alert('인증이 완료되었습니다.', function () {
+                ref.close()
+                _self.$router.push({ name: 'agreeStep', params: { 'index': _self.remoteaddr } })
+              }, _self.CNAME, '확인')
             }
           })
         })

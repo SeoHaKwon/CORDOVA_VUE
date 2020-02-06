@@ -1,6 +1,10 @@
 <template>
   <transition name="modal">
-    <div class="ModalSkeleton modal-mask">
+    <div class="ModalSkeleton modal-mask" id="modal-mask">
+      <div class="modal-mobile-header">
+        <slot name="svg"></slot>
+        <slot name="cate"></slot>
+      </div>
       <div class="modal-wrapper">
         <div class="modal-container">
           <slot
@@ -40,13 +44,13 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background: rgba(255, 255, 255, 0.9);
-  z-index: 9999999;
+  z-index: 1501;
   display: block;
   padding: 70px 0;
-  overflow-y: auto;
+  overflow-y: hidden;
 
   .modal-wrapper {
     margin: 0 auto;
@@ -55,6 +59,7 @@ export default {
     border: 1px solid #C7C7CC;
     border-radius: 6px;
     background: #fff;
+    z-index: 1502;
   }
 
   @media (min-width: 900px) and (max-width: 1149px) {
@@ -66,6 +71,9 @@ export default {
       border-radius: 6px;
       background: #fff;
       margin-top: 5vh;
+      z-index: 1502;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
     }
   }
 
@@ -76,10 +84,10 @@ export default {
     width: 100%;
     height: 100%;
     background: rgba(255, 255, 255, 1);
-    z-index: 9999999;
+    // z-index: 9999999;
     display: block;
     padding: 0;
-    overflow-y: auto;
+    overflow: hidden;
 
     .modal-wrapper {
       width: 100%;
@@ -89,7 +97,10 @@ export default {
       background: #fff;
       height: 100%;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       margin-top: 5vh;
+      height: 100vh;
+      z-index: 1502;
     }
   }
 }

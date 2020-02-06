@@ -3,6 +3,7 @@
     <div class="desktop-header">
       <NavigationBar :scrollResult="scrollTemp"/>
     </div>
+    <!-- /ask가 아닌경우는 FAQ 질문하기 페이지 진입시 상단의 헤더가 보여지지 않게 하기 위함이다. -->
     <div class="mobile-header" v-if="$route.fullPath !== '/ask'">
       <MobileNavigaterBar :scrollResult="scrollTemp"/>
     </div>
@@ -15,6 +16,7 @@
     <template v-if="$route.fullPath !== '/ask'">
       <footerBody />
     </template>
+    <!-- 하단의 팝업창은 앱으로의 접근이 아닌 모바일웹으로의 접근시 보여주어야 한다. -->
     <div v-if="isAppDownloadModal" class="app-download-modal">
       <div class="content">
         <h3>주주와 함께하는 {{ cname }}</h3>
@@ -41,7 +43,6 @@ import ModalDesktop from '@/components/TypeB/ModalDesktop.vue'
 import bus from '@/utils/bus'
 import Spinner from '@/components/TypeB/Spinner'
 Vue.component('modal-desktop', ModalDesktop)
-
 export default {
   name: 'app',
   components: {
@@ -72,7 +73,7 @@ export default {
     // bus.$off('end:spinner', this.endSpinner)
   },
   computed: {
-    ...mapGetters(['getCompName'])
+    ...mapGetters(['getCompName', 'getCompSeq'])
   },
   watch: {
     getCompName () {
@@ -110,12 +111,29 @@ export default {
     }
   },
   mounted () {
+    const _self = this
     if (window.outerWidth < 900) {
       this.isMobile = true
     }
     this.fullPath = this.$route.fullPath
     if (this.getCompName) {
       this.setTITLE()
+    }
+    /* 방문로그 시작 */
+    /* ANDROID 및 IOS는 locations에 localStorage.getItem('DI') 로 넣어주어야 함 */
+    /* 조건도 걸어주어야함. 회원가입을 했을때 넣어주어야 하기때문 */
+    if (localStorage.getItem('DI') && (!localStorage.getItem('SETLOG') || new Date().getDate() !== new Date(localStorage.getItem('SETLOG')).getDate())) {
+      let seq = _self.getCompSeq || localStorage.getItem('SEQ')
+      const param = {
+        'locations': localStorage.getItem('DI'),
+        'platform': 'IOS',
+        'seq': seq
+      }
+      _self.$store.dispatch('SET_LOG', param)
+        .then(res => {
+          localStorage.setItem('SETLOG', new Date())
+        })
+      /* 방문 로그 끝 */
     }
   }
 }
@@ -124,11 +142,9 @@ export default {
 <style lang="scss">
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,500,700&display=swap&subset=korean');
 @import "@/style/_variables.scss";
-
 .performance-group-tab li, .schedule-list li{
   cursor: pointer;
 }
-
 * {
   word-break: keep-all;
   font-family: 'Noto Sans KR', sans-serif;
@@ -148,7 +164,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-
   & img {
     margin-left: 10px;
   }
@@ -158,7 +173,6 @@ export default {
   align-items: center;
   justify-content: space-between;
   margin-top: 21px;
-
   .date {
     font-size: 14px;
     color: #8E8E93;
@@ -167,18 +181,15 @@ export default {
 .IR-modal-list {
   list-style: none;
   margin-top: 50px;
-
   li {
     padding: 26px;
     border-top: 1px solid $border-color;
     display: flex;
     justify-content: left;
     align-items: center;
-
     &:last-child {
       border-bottom: 1px solid $border-color;
     }
-
     img {
         margin-right: 20px;
     }
@@ -193,7 +204,6 @@ export default {
   position: fixed;
   right: 50px;
   top: 70px;
-
   & img {
     cursor: pointer;
   }
@@ -211,7 +221,7 @@ input {
   overflow: hidden;
 }
 .mobile-global-body {
-  padding-top: $mobile-global-margin-top;
+  margin-top: $mobile-global-margin-top;
 }
 .flex-lefet-center {
   display: flex;
@@ -223,7 +233,6 @@ input {
     display: flex;
     justify-content: left;
     align-items: center;
-
     & input {
       opacity: 0;
       position: absolute;
@@ -244,7 +253,6 @@ input {
     & input[type="checkbox"]:checked +  .checkbox {
       background: #E91E63;
       border-color: transparent;
-
       &:after {
         content: '';
         display: block;
@@ -316,7 +324,6 @@ input {
     left: 0;
     top: 0;
     z-index: 10000000000;
-
     .content {
       padding: 47px;
       position: absolute;
@@ -326,7 +333,6 @@ input {
       background: #fff;
       width: 100%;
       text-align: center;
-
       h3 {
         font-size: 20px;
         letter-spacing: -0.005em;
@@ -357,7 +363,6 @@ input {
         margin-top: 13px;
         cursor: pointer;
       }
-
     }
   }
   .mobile-header {
@@ -387,7 +392,7 @@ input {
     left: 0;
     width: 100%;
     background: #fff;
-    z-index: 9999999999;
+    z-index: 1501;
     font-size: 20px;
     font-weight: 700;
     padding-top: 5vh;

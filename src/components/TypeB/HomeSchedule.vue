@@ -19,15 +19,13 @@
       </ul>
     </div>
     <modal-desktop v-if="isIRModal">
+        <svg slot="svg" style="width:32px;height:32px" viewBox="0 0 24 24" v-on:click="clickModal(false)">
+          <path fill="#313439" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+        </svg>
+        <span slot="cate" style="color:#313439">일정</span>
         <div slot="body">
             <div class="modal-desktop-close" v-on:click="clickModal(false)">
                 <img width="40px" src="@/assets/Type_B/img/ic_modal_close.png"/>
-            </div>
-            <div class="modal-mobile-header">
-              <svg style="width:32px;height:32px" viewBox="0 0 24 24" v-on:click="clickModal(false)">
-                <path fill="#313439" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
-              </svg>
-              <span style="color:#313439">일정</span>
             </div>
             <h5 class="modal-map">Investor Relations > 일정</h5>
             <div class="title-image">
@@ -88,7 +86,8 @@ export default {
       S_DATE: [],
       TITLE: [],
       idx: 0,
-      mcolor: ''
+      mcolor: '',
+      scrollData: 0
     }
   },
   components: {
@@ -110,7 +109,7 @@ export default {
   },
   methods: {
     clickModal (isOpen, idx) {
-      const globalBody = document.getElementsByTagName('html')[0]
+      const globalBody = document.getElementsByTagName('body')[0]
       const _self = this
       if (isOpen) {
         globalBody.style.overflow = 'hidden'
@@ -122,8 +121,13 @@ export default {
           _self.modalData[1].description = _self.SCHEDULE[idx].PLACE
           _self.modalData[2].description = _self.SCHEDULE[idx].ETC
         }
+        globalBody.style.overflow = 'hidden'
+        this.scrollData = document.documentElement.scrollTop
+        document.querySelector('.mobile-global-body').style.height = 0
       } else {
         globalBody.style.overflow = 'inherit'
+        document.querySelector('.mobile-global-body').style.removeProperty('height')
+        document.documentElement.scrollTop = this.scrollData
       }
       this.isIRModal = isOpen
     },

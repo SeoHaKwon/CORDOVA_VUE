@@ -86,6 +86,10 @@ export default {
     },
     startApp () {
       const _self = this
+      if (!(this.email.indexOf('@') !== -1)) {
+        window.alert('이메일 주소를 올바르게 입력해 주세요.', false, _self.getCompName, '확인')
+        return false
+      }
       localStorage.setItem('DI', this.$route.params.di)
       if (_self.isStart) {
         if (this.$route.params.di) {
@@ -95,7 +99,7 @@ export default {
         } else if (_self.getUserDI) {
           _self.insertData(_self.getUserDI)
         } else {
-          alert('잘못된 접근 입니다.')
+          window.alert('잘못된 접근입니다.', false, _self.getCompName, '확인')
           _self.$router.push('/firstStep')
         }
       }

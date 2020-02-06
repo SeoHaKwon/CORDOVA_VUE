@@ -1,6 +1,6 @@
 <template>
   <div class="MobileNavigaterBar">
-    <header v-if="is_header">
+    <header>
       <div class="header-logo">
         <img width="92px" height="26px" :src="logo" />
       </div>
@@ -16,7 +16,7 @@
       </div>
       <transition name="slide">
         <ul v-if="isMenuShow">
-          <li class="topheader">Investor Realations</li>
+          <li class="topheader">Investor Relations</li>
           <li v-for="(item, idx) in v_list" v-bind:key="idx" v-on:click="goMenuBtn(item.c_name)">
             <a href="javascript:void(0)">
               {{ item.title }}
@@ -59,8 +59,7 @@ export default {
         { 'title': 'IR Contact', 'isActive': false, 'color': '', 'c_name': 'Contact', 'isView': true }
       ],
       v_list: [],
-      originScroll: 0,
-      is_header: true
+      originScroll: 0
     }
   },
   props: [
@@ -92,9 +91,6 @@ export default {
     },
     GETISVIEW () {
       this.isView()
-    },
-    '$route.params' () {
-      this.is_header = true
     }
   },
   mounted () {
@@ -159,18 +155,6 @@ export default {
       } else {
         bodyTag.style.overflow = 'inherit'
       }
-    },
-    getScroll () {
-      const _self = this
-      if (_self.scrollResult > _self.originScroll) {
-        _self.is_header = false
-        if (_self.scrollResult === 100 && _self.originScroll === 0) {
-          _self.is_header = true
-        }
-      } else {
-        _self.is_header = true
-      }
-      _self.originScroll = _self.scrollResult
     },
     headerMenuBtn () {
       const _self = this

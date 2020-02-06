@@ -34,6 +34,7 @@ export default {
     const _self = this
       document.addEventListener('deviceready', function () {
         window.open = cordova.InAppBrowser.open
+        window.alert = navigator.notification.alert
         if (!localStorage.getItem('DI')) {
           _self.$store.commit('setIsAppJoin', false)
           var inter = setInterval(function () {
