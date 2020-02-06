@@ -72,7 +72,8 @@ export default {
     focusEvent () {
       const top = document.querySelector('body')
       this.isFocus = false
-      top.scroll('top', 0)
+      // top.scroll('top', 0)
+      document.documentElement.scrollTop = 0
     },
     blurEvent () {
       this.isFocus = true
@@ -106,7 +107,7 @@ export default {
         _self.DI = localStorage.getItem('DI')
       }
       if (this.textData.length === 0 || this.textData.replace(' ', '').length === 0) {
-        window.alert('내용을 작성 해 주세요.', false, _self.getCompName, '확인')
+        window.alert('질문 내용을 입력해주세요.', false, _self.getCompName, '확인')
       } else if (this.textData.length > 300) {
         window.alert('글자 수가 초과되었습니다.', false, _self.getCompName, '확인')
       } else {
