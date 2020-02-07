@@ -18,7 +18,7 @@
         </li>
       </ul>
     </div>
-    <modal-desktop v-if="isIRModal">
+    <modal-desktop v-if="getOpenModal && getModalCate === 'SCHE'">
         <div slot="body">
             <div class="modal-desktop-close" v-on:click="clickModal(false)">
                 <img width="40px" src="@/assets/Type_B/img/ic_modal_close.png"/>
@@ -69,7 +69,6 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
-      isIRModal: false,
       modalData: [
         {
           title: '일시',
@@ -106,7 +105,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getCompSeq', 'getMainColor'])
+    ...mapGetters(['getCompSeq', 'getMainColor', 'getOpenModal', 'getModalCate'])
   },
   methods: {
     clickModal (isOpen, idx) {
@@ -125,7 +124,8 @@ export default {
       } else {
         globalBody.style.overflow = 'inherit'
       }
-      this.isIRModal = isOpen
+      this.$store.commit('setOpenModal', isOpen)
+      this.$store.commit('setModalCate', 'SCHE')
     },
     getData () {
       const _self = this

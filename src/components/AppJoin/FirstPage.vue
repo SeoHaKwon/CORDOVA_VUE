@@ -87,6 +87,7 @@ export default {
               if (event.url.indexOf('setMember') !== -1) {
                 // 어차피 추가정보 입력시에 DB검사를 통하여 인증이 된 회원인지 검사를 하기때문에 현재로써
                 // 인증은 성공했다고 가정할 수 있음
+                window.alert('인증이 완료되었습니다.', false, _self.CNAME, '확인')
                 ref.close()
                 _self.$router.push({ name: 'agreeStep', params: { 'index': _self.remoteaddr } })
                 // setMember URL 진입시 해당 인앱창을 닫고 다음페이지로 이동

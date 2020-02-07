@@ -35,9 +35,21 @@ export default new Vuex.Store({
     SubImg: '',
     isAppJoin: true,
     userDI: '',
-    userhp: 0
+    userhp: 0,
+    openModal: false,
+    modalCate: '',
+    keyBoardOn: false
   },
   getters: {
+    getKeyBoardOn (state) {
+      return state.keyBoardOn
+    },
+    getModalCate (state) {
+      return state.modalCate
+    },
+    getOpenModal (state) {
+      return state.openModal
+    },
     getUserHP (state) {
       return state.userhp
     },
@@ -100,6 +112,15 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    setKeyBoardOn (state, data) {
+      state.keyBoardOn = data
+    },
+    setModalCate (state, data) {
+      state.modalCate = data
+    },
+    setOpenModal (state, data) {
+      state.openModal = data
+    },
     setUserDI (state, data) {
       state.userDI = data
     },

@@ -24,20 +24,58 @@ export default {
     return {
       IRPAGE_TYPE: '',
       IRPAGE_USE: true,
-      scrollTemps: 0
+      scrollTemps: 0,
+      isClose: false
     }
   },
   computed: {
-    ...mapGetters(['getIsAppJoin'])
+    ...mapGetters(['getIsAppJoin', 'getOpenModal'])
   },
   beforeCreate () {
     const _self = this
     document.addEventListener('deviceready', function () {
       // navigator.splashscreen 및 FCMPlugin 객체는 deviceready 에서만 가능
       window.open = cordova.InAppBrowser.open
+      window.alert = navigator.notification.alert
       document.addEventListener('backbutton', function () {
-        navigator.app.exitApp()
+        if (_self.getOpenModal) {
+          const globalBody = document.getElementsByTagName('html')[0]
+          globalBody.style.overflow = 'inherit'
+          _self.$store.commit('setOpenModal', false)
+        } else {
+          if (_self.isClose) {
+            navigator.app.exitApp()
+          } else {
+            if (_self.$route.name === 'ask') {
+              _self.$router.push('/')
+            } else {
+              _self.isClose = true
+              window.plugins.toast.showWithOptions({
+                message: '"뒤로" 버튼 한번 더 누르시면 종료됩니다.',
+                duration: 1500,
+                position: 'bottom',
+                addPixelsY: -100
+              },
+              function (res) {
+                if (res && res.event) {
+                  if (res.event === 'hide') {
+                    _self.isClose = false
+                  }
+                }
+              })
+              setTimeout(function () {
+                _self.isClose = false
+              }, 1500)
+            }
+          }
+        }
       }, false)
+      window.addEventListener('keyboardDidHide', () => {
+        _self.$store.commit('setKeyBoardOn', false)
+      })
+      window.addEventListener('keyboardDidShow', () => {
+        _self.$store.commit('setKeyBoardOn', true)
+      })
       if (!localStorage.getItem('DI')) {
         // token이 localStorage에 없는 우에는 토큰을 받아올 때까지 interval을 주어 받아온다.
         var inter = setInterval(function () {

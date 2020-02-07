@@ -124,10 +124,11 @@ export default {
     /* ANDROID 및 IOS는 locations에 localStorage.getItem('DI') 로 넣어주어야 함 */
     /* 조건도 걸어주어야함. 회원가입을 했을때 넣어주어야 하기때문 */
     if (localStorage.getItem('DI') && (!localStorage.getItem('SETLOG') || new Date().getDate() !== new Date(localStorage.getItem('SETLOG')).getDate())) {
+      let seq = _self.getCompSeq || localStorage.getItem('SEQ')
       const param = {
         'locations': localStorage.getItem('DI'),
         'platform': 'ANDROID',
-        'seq': _self.getCompSeq
+        'seq': seq
       }
       _self.$store.dispatch('SET_LOG', param)
         .then(res => {

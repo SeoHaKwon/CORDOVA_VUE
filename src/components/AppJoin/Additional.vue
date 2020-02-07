@@ -83,13 +83,17 @@ export default {
     },
     startApp () {
       const _self = this
+      if (!(this.email.indexOf('@') !== -1)) {
+        window.alert('이메일 형식이 올바르지 않습니다.', false, _self.CNAME, '확인')
+        return false
+      }
       if (_self.isStart) {
         if (_self.getUserDI) {
           _self.insertData(_self.getUserDI)
         } else if (localStorage.getItem('DI')) {
           _self.insertData(localStorage.getItem('DI'))
         } else {
-          alert('잘못된 접근 입니다.')
+          window.alert('잘못된 접근입니다.', false, _self.CNAME, '확인')
           _self.$router.replace('/firstStep')
         }
       }

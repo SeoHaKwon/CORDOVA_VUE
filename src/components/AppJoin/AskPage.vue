@@ -6,28 +6,29 @@
       <strong>문의하기</strong>
     </div>
     <div class="content">
-      <strong class="tit" v-if="isFocus">
+      <strong class="tit" v-if="!getKeyBoardOn">
         {{ compname }}에<br>
         궁금하신 내용을 문의 주시면<br>
         IR담당자가 직접 답변 드립니다.
       </strong>
-      <p class="sub" v-if="isFocus">
+      <p class="sub" v-if="!getKeyBoardOn">
         등록된 이메일과 푸시알림으로 답변이 전달됩니다.
       </p>
      <div class="textarea-wrap">
        <strong class="tit">문의 내용</strong>
        <div class="textarea">
-        <textarea name="" id="" cols="30" rows="10" v-on:focus="focusEvent" v-on:blur="blurEvent" v-model="textData"></textarea>
-        <p class="txt" v-if="isFocus && textData.length === 0">
+        <textarea name="" id="" cols="30" rows="10" v-model="textData"></textarea>
+        <p class="txt" v-if="!getKeyBoardOn && textData.length === 0">
           <strong>질문 내용을 입력해주세요.</strong>
           (작성글은 300자 내로 제한됩니다.) <br>
           반말, 욕설, 비방, 홍보, 광고 등 부적절한 내용의 문의 내용에 대해서는 답변을 드릴 수 없으며 추후 이용에 제한을 둘 수 있습니다.
         </p>
+        <div class="max-txt"><span>{{ textData.length }}</span>/300</div>
        </div>
      </div>
     </div>
     </div>
-    <div v-if="isFocus" style="position: absolute;bottom: 0;width: 100%;">
+    <div v-if="!getKeyBoardOn" style="position: absolute;bottom: 0;width: 100%;">
     <a href="javascript:void(0);" class="btn-bottom" :style="{'background-color': mcolor}" v-on:click="sendQA">
       IR담당자에게 전송
     </a>
@@ -41,7 +42,7 @@ export default {
   name: 'AskPage',
   data: () => {
     return {
-      isFocus: true,
+      isFocus: false,
       textData: '',
       SEQ: 0,
       DI: '',
@@ -50,7 +51,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getCompSeq', 'getUserDI', 'getCompName', 'getMainColor'])
+    ...mapGetters(['getCompSeq', 'getUserDI', 'getCompName', 'getMainColor', 'getKeyBoardOn'])
   },
   mounted () {
     this.compName()
@@ -58,6 +59,14 @@ export default {
   watch: {
     getCompName () {
       this.compName()
+    },
+    getKeyBoardOn () {
+      const _self = this
+      if (_self.textData.length === 0) {
+        _self.mcolor = '#D1D1D6'
+      } else {
+        _self.mcolor = '#' + _self.getMainColor
+      }
     }
   },
   methods: {
@@ -66,20 +75,6 @@ export default {
         this.compname = this.getCompName
       } else {
         this.compname = localStorage.getItem('CNAME')
-      }
-    },
-    focusEvent () {
-      const top = document.querySelector('body')
-      this.isFocus = false
-      top.scroll('top', 0)
-    },
-    blurEvent () {
-      this.isFocus = true
-      const _self = this
-      if (_self.textData.length === 0) {
-        _self.mcolor = '#D1D1D6'
-      } else {
-        _self.mcolor = '#' + _self.getMainColor
       }
     },
     goBack () {
@@ -104,8 +99,10 @@ export default {
       } else {
         _self.DI = localStorage.getItem('DI')
       }
-      if (this.textData.length === 0) {
-        alert('내용을 작성해주세요.')
+      if (this.textData.length === 0 || this.textData.replace(' ', '').length === 0) {
+        window.alert('질문내용을 입력해주세요.', false, _self.getCompName, '확인')
+      } else if (this.textData.length > 300) {
+        window.alert('글자 수가 초과 되었습니다.', false, _self.getCompName, '확인')
       } else {
         const aram = {
           seq: _self.SEQ,
@@ -114,7 +111,7 @@ export default {
         }
         this.$store.dispatch('SET_QA', aram)
           .then(() => {
-            alert('문의하기 성공')
+            window.alert('전송완료 되었습니다.', false, _self.getCompName, '확인')
             _self.$router.push('/')
           })
       }
@@ -259,6 +256,17 @@ button {
         line-height: 22px;
         letter-spacing: -0.5px;
         color: #8E8E93;
+      }
+    }
+    .max-txt {
+      position:absolute;
+      right:15px;
+      bottom:14px;
+      font-size: 14px;
+      line-height: 22px;
+      color: #8E8E93;
+      span {
+        color:#2f80ed;
       }
     }
   }

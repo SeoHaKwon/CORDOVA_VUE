@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <div class="header">
-      <a href="#" class="btn-link"></a>
+      <!-- <a href="#" class="btn-link"></a> -->
       <strong>약관동의</strong>
     </div>
     <div class="content">
@@ -10,25 +10,25 @@
         <p class="check-box">
           <input type="checkbox" id="checkbox-1" v-model="allAgree" v-on:click="allAgreeClick">
           <label for="checkbox-1"><span class="mycolor" :style="{'background-color': acolor}"></span></label>
-          <span>전체동의</span>
+          <span v-on:click="allAgreeClick">전체동의</span>
         </p>
       </div>
         <p class="check-box">
           <input type="checkbox" id="checkbox-2" v-model="serviceAgree">
           <label for="checkbox-2"><span class="mycolor" :style="{'background-color': bcolor}"></span></label>
-          <span>(필수) 이용약관</span>
+          <span v-on:click="serviceAgree = !serviceAgree">(필수) 이용약관</span>
           <button class="btn-view" v-on:click="popOpen(0)">보기</button>
         </p>
         <p class="check-box">
           <input type="checkbox" id="checkbox-3" v-model="infoAgree">
           <label for="checkbox-3"><span class="mycolor" :style="{'background-color': ccolor}"></span></label>
-          <span>(필수) 개인정보 수집 및 이용 안내</span>
+          <span v-on:click="infoAgree = !infoAgree">(필수) 개인정보 수집 및 이용 안내</span>
           <button class="btn-view" v-on:click="popOpen(1)">보기</button>
         </p>
         <p class="check-box">
           <input type="checkbox" id="checkbox-4" v-model="giveAgree">
           <label for="checkbox-4"><span class="mycolor" :style="{'background-color': dcolor}"></span></label>
-          <span>(필수) 제 3자 제공동의</span>
+          <span v-on:click="giveAgree = !giveAgree">(필수) 제 3자 제공동의</span>
           <button class="btn-view" v-on:click="popOpen(2)">보기</button>
         </p>
     </div>
@@ -484,7 +484,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getMainColor'])
+    ...mapGetters(['getMainColor', 'getCompName'])
   },
   watch: {
     allAgree () {
@@ -541,6 +541,7 @@ export default {
     }
   },
   mounted () {
+    this.dataList[0]['zo'][0].desc = '<p>본 약관은 주식회사 ' + this.getCompName + '(이하 "회사"라 합니다)가 IR Page를 (이하 "IR전용 모바일 어플리케이션"이라 합니다) 통하여 제공하는 서비스(이하 "서비스"라 합니다)를 이용함에 있어 이용자와 "회사"의 권리·의무 및 책임사항을 규정함을 목적으로 합니다.</p><p>본 약관에 정하는 이외의 "이용자"와 "회사"의 권리, 의무 및 책임사항에 관해서는 전기통신사업법 기타 대한민국의 관련 법령과 상관습에 의합니다.</p>'
     this.checkData()
   },
   methods: {
@@ -557,7 +558,7 @@ export default {
             _self.USERDI = res.USER_DI
           })
       } else {
-        alert('잘못된 접근입니다.')
+        window.alert('잘못된 접근입니다.', false, _self.getCompName, '확인')
         _self.$router.push('/')
       }
     },
@@ -566,6 +567,7 @@ export default {
       _self.IsPop = false
     },
     popOpen (idx) {
+      document.querySelector('.pop-inner').scrollTop = 0
       const _self = this
       _self.IsPop = true
       _self.selNum = idx
@@ -584,7 +586,7 @@ export default {
         // _self.$router.push('/additionalInfor')
         _self.$router.push({ name: 'additionalInfor', params: { 'di': _self.USERDI } })
       } else {
-        alert('전체동의를 해주세요')
+        window.alert('전체동의를 해주세요.', false, _self.getCompName, '확인')
       }
     }
   }

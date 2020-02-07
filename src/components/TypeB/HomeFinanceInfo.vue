@@ -52,6 +52,28 @@
           <span class="data-type" :style="{ color: mcolor}">PDF</span>
         </h6>
       </li>
+      <li v-on:click="getData(finance[nowQ].UPLOAD_FILE4)" v-if="finance[nowQ].UPLOAD_FILE4">
+        <h5>자본변동표 ({{finance[nowQ].YEAR.substr(2,2)}}.{{finance[nowQ].PERIOD}}Q)</h5>
+        <h6>
+          <a>
+            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+              <path v-bind:fill="mcolor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
+            </svg>
+          </a>
+          <span class="data-type" :style="{ color: mcolor}">PDF</span>
+        </h6>
+      </li>
+      <li v-on:click="getData(finance[nowQ].UPLOAD_FILE5)" v-if="finance[nowQ].UPLOAD_FILE5">
+        <h5>주석 ({{finance[nowQ].YEAR.substr(2,2)}}.{{finance[nowQ].PERIOD}}Q)</h5>
+        <h6>
+          <a>
+            <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+              <path v-bind:fill="mcolor" d="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
+            </svg>
+          </a>
+          <span class="data-type" :style="{ color: mcolor}">PDF</span>
+        </h6>
+      </li>
     </ul>
   </div>
 </template>

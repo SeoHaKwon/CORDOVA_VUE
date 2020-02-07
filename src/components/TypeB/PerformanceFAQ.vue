@@ -1,5 +1,5 @@
 <template>
-  <div class="PerformanceFAQ contaner" v-if="faqContents.length > 0 && qtype == 'Y'">
+  <div class="PerformanceFAQ contaner" v-if="qtype == 'Y'">
     <h2 class="section-title-roboto">FAQ</h2>
     <h3 class="section-sube">
       Frequently Asked Questions
@@ -29,7 +29,7 @@
     <div class="question_div" v-if="getUserDI || isMobile">
       <button class="question" v-on:click="goAsk" style="border: 0;cursor: pointer;" :style="{'background-color': mcolor}">문의하기</button>
     </div>
-    <modal-desktop v-if="isIRModal">
+    <modal-desktop v-if="getOpenModal && getModalCate === 'FAQ'">
       <div slot="body">
         <div class="modal-desktop-close" @click="clickModal(false)">
             <img width="40px" src="@/assets/Type_B/img/ic_modal_close.png"/>
@@ -103,7 +103,6 @@ export default {
   data () {
     return {
       viewIdx: 0,
-      isIRModal: false,
       faQ: [],
       faqContents: [],
       isActive: {
@@ -140,7 +139,8 @@ export default {
       } else {
         globalBody.style.overflow = 'inherit'
       }
-      this.isIRModal = isOpen
+      this.$store.commit('setModalCate', 'FAQ')
+      this.$store.commit('setOpenModal', isOpen)
     },
     getContents (quat, idx) {
       const _self = this
@@ -190,7 +190,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getCompSeq', 'getCompCode', 'getQaType', 'getMainColor', 'getUserDI'])
+    ...mapGetters(['getCompSeq', 'getCompCode', 'getQaType', 'getMainColor', 'getUserDI', 'getOpenModal', 'getModalCate'])
   },
   watch: {
     getMainColor () {

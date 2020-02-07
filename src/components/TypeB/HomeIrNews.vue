@@ -24,7 +24,7 @@
       </button>
     </div>
 
-    <modal-desktop v-if="isIRModal">
+    <modal-desktop v-if="getOpenModal && getModalCate === 'NEWS'">
         <div slot="body">
             <div class="modal-desktop-close" v-on:click="clickModal(false)">
                 <img width="40px" src="@/assets/Type_B/img/ic_modal_close.png"/>
@@ -100,7 +100,6 @@ export default {
   },
   data () {
     return {
-      isIRModal: false,
       modalDescription: '',
       modalDescriptionSub: '',
       NewsList: [],
@@ -132,7 +131,7 @@ export default {
   },
   methods: {
     ViewFile (URL) {
-      window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + URL, '_BLANK', 'width=500,height=550,top=100,left=100,fullscreen=no,menubar=no,status=no,toolbar=no,titlebar=yes,location=no')
+      window.open('https://file.irgo.co.kr/data/BOARD/ATTACH_PDF/' + URL, '_system', 'width=500,height=550,top=100,left=100,fullscreen=no,menubar=no,status=no,toolbar=no,titlebar=yes,location=no')
     },
     clickModal (isOpen, idx) {
       const globalBody = document.getElementsByTagName('html')[0]
@@ -142,7 +141,8 @@ export default {
       } else {
         globalBody.style.overflow = 'inherit'
       }
-      this.isIRModal = isOpen
+      this.$store.commit('setOpenModal', isOpen)
+      this.$store.commit('setModalCate', 'NEWS')
     },
     chageData (idx) {
       const _self = this
@@ -197,7 +197,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getCompSeq', 'getMainColor'])
+    ...mapGetters(['getCompSeq', 'getMainColor', 'getOpenModal', 'getModalCate'])
   },
   watch: {
     getCompSeq () {

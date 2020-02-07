@@ -1,6 +1,6 @@
 <template>
   <div class="PerformanceContents">
-    <ul class="performance-group-tab">
+    <ul class="performance-group-tab" style="margin-bottom: 0px;">
       <li v-for="(items, idx) in silq" v-on:click="getContents(items, idx)" :class="isActive[idx]" v-bind:key="idx">
         <a>{{ items }}</a>
       </li>
@@ -250,7 +250,7 @@ svg {
         /* 추가 */
         // margin-left:20px;
         /* 추가 */
-        margin: 0 40px 0 20px;
+        margin: 0 40px 0 0px;
         font-size: 30px;
         line-height: 1.5;
         font-weight: normal;

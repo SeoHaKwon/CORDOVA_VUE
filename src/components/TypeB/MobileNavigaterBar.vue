@@ -16,7 +16,7 @@
       </div>
       <transition name="slide">
         <ul v-if="isMenuShow">
-          <li class="topheader">Investor Realations</li>
+          <li class="topheader">Investor Relations</li>
           <li v-for="(item, idx) in v_list" v-bind:key="idx" v-on:click="goMenuBtn(item.c_name)">
             <a href="javascript:void(0)">
               {{ item.title }}
